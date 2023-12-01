@@ -1,0 +1,78 @@
+{% extends "base.html"%}
+{% block title %}Blue Bull Bar - Comprar{% endblock %}
+{% block content %}
+
+<!-- header -->
+<header id="home" class="header">
+    <div class="overlay text-white text-center"><br><br>
+        <h1 class="display-2 font-weight-bold pt-5 my-3">Blue Bull Bar</h1>
+        <h2 class="display-4 mb-5">Always fresh &amp; Delightful</h2>
+        <a class="btn btn-lg btn-primary" href="#comprar">Información para tu compra</a>
+    </div>
+    <!-- Mostrar mendajes flash -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="">
+        {% for message in messages %}
+        <div class="alert alert-danger">
+            <li>{{ message }}</li>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+</header>
+
+<div id="comprar" class="container-fluid wow fadeIn">
+    <div class="row">
+        <div class="col-lg-6 mb-5 mt-3 text-center">
+            <div style="margin: 10px 10%;">
+
+                <h2 class="mb-4">Tu menú a comprar</h2>
+
+                <div>
+                    <!-- Itera sobre los elementos del carrito -->
+                    {% for item_cart in carrito %}
+                    <div>
+                        <p>Nombre: {{ item_cart.nombre }} - Cantidad: {{ item_cart.cantidad }} <br> Precio: ${{
+                            item_cart.precio }}</p>
+                        <hr>
+                    </div>
+                    {% endfor %}
+                    <p>Total a pagar: $ {{total}}</p>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+        <!-- Columna de Inicio de Sesión -->
+        <div class="col-lg-6 mb-5 mt-3 text-center">
+            <div style="margin: 10px 10%;">
+                <h2 class="mb-4">Importante!!</h2>
+                <form action="{{ url_for('compra.realizar_compra') }}" method="post" autocomplete="off" novalidate
+                    autocomplete="off">
+                    {{ form.csrf_token }}
+
+                    <div class="form-group">
+                        {{ form.metodo_pago.label }} {{ form.metodo_pago(class="form-control") }}
+                        <div>
+                            {% if form.metodo_pago.errors %}
+                            <div class="alert alert-danger">{{ form.metodo_pago.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="justify-content-center">
+                        {{form.submit_compra(class="btn btn-primary")}}</div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+<hr>
+
+{% endblock %}

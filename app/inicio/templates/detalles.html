@@ -1,0 +1,84 @@
+{% extends "base.html"%}
+{% block title %}Blue Bull Bar - Detalles{% endblock %}
+
+{% block content %}
+<!-- header -->
+<header id="home" class="header">
+    <div class="overlay text-white text-center">
+        <br><br><br><br>
+        <h1 class=" font-weight-bold my-3">{{item_menu.nombre}}</h1>
+        <h5 class="mb-5">{{item_menu.descripcion}}</h5>
+        <a class="btn btn-lg btn-primary" href="#cart">Elige la cantidad</a>
+    </div>
+</header>
+
+<!-- CONTACT Section  -->
+<div id="cart" class="container-fluid bg-dark text-light border-top wow fadeIn">
+    <div class="row">
+        <div class="col-md-6 px-0">
+            {% if item_menu.imagen.startswith('http') %}
+            <img src="{{ item_menu.imagen }}" alt="template by DevCRID http://www.devcrud.com/"
+                class="rounded-0 card-img-top mg-responsive">
+            {% else %}
+            <img src="{{ url_for('static', filename='img/menu/' + item_menu.imagen) }}"
+                alt="template by DevCRID http://www.devcrud.com/" class="rounded-0 card-img-top mg-responsive">
+
+            {% endif %}
+        </div>
+        <div class="col-md-6 px-5 has-height-lg middle-items mt-3">
+            <h3>{{item_menu.nombre}}</h3>
+            <hr>
+            <h4>Valor Unitario: ${{item_menu.precio}}</h4>
+            <p>{{item_menu.descripcion}}</p>
+            <br>
+            <form action="{{ url_for('cart.agregar_item',id_item=item_menu.id)}}" method="post">
+                <label for="cantidad">Cantidad a pedir:</label>
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                        <input type="number" id="cantidad" name="cantidad" value="1" min="1" max="" class="form-control"
+                            oninput="actualizar_precio()">
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-xs-6 my-2">
+                        <h6>Precio x cantidad: $ <span id="precio_total">{{item_menu.precio}}</span></h6>
+                    </div>
+                </div>
+
+                <br>
+                <input type="number" id="precio" hidden name="precio" value="{{item_menu.precio}}"><br>
+                <input type="number" id="precio_x_cantidad" hidden name="precio_x_cantidad"
+                    value="{{item_menu.precio}}"><br>
+                <button id="agregar" type="submit" class="btn btn-primary">Agregar al carrito</button>
+            </form>
+            <hr>
+            <!-- <div class="text-muted">
+                <p><span class="ti-location-pin pr-3"></span> 12345 Fake ST NoWhere, AB Country</p>
+                <p><span class="ti-support pr-3"></span> (123) 456-7890</p>
+                <p><span class="ti-email pr-3"></span>info@website.com</p>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<script>
+    function actualizar_precio() {
+        let cantidad = document.getElementById('cantidad').value;
+        let precio = document.getElementById('precio').value;
+        let total = cantidad * precio;
+
+        if (cantidad > 0) {
+            document.getElementById('agregar').disabled = false;
+            // Actualiza el valor oculto
+            document.getElementById('precio_total').innerHTML = total;
+            document.getElementById('precio_x_cantidad').value = total;
+        } else {
+            document.getElementById('agregar').disabled = true;
+            document.getElementById('precio_total').innerHTML = 'Ingrese una cantidad';
+            document.getElementById('precio_x_cantidad').value = 0;
+
+        }
+
+    }
+</script>
+
+<hr>
+{% endblock %}

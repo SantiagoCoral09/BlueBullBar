@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}Blue Bull Bar - Login/Registro{% endblock %}
+{% block content %}
+
+<!-- header -->
+<header id="home" class="header">
+    <div class="overlay text-white text-center"><br><br>
+        <h1 class="display-2 font-weight-bold my-3">Blue Bull Bar</h1>
+        <h2 class="display-4 mb-5">Always fresh &amp; Delightful</h2>
+        <a class="btn btn-lg btn-primary">Accede a tu cuenta o regístrate</a>
+        <hr>
+        <!-- Mostrar mendajes flash -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="">
+            {% for message in messages %}
+            <div class="alert alert-danger">
+                <li>{{ message }}</li>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+</header>
+
+<div id="about" class="container-fluid wow fadeIn" id="about">
+    <div class="row">
+        <!-- Columna de Registro -->
+        <div class="col-lg-6 mb-5 mt-3 text-center ">
+            <div class="container pb-5 pt-5" style="background-color: rgba(255, 255, 255, 0.05);">
+                <div style="margin: 10px 10%; ">
+
+                    <h2 class="mb-4">Regístrate</h2>
+
+
+                    <form method="post" action="{{ url_for('auth.login_registro') }}" novalidate autocomplete="off">
+                        {{ form_registro.csrf_token }}
+
+                        <div class="form-group">
+                            {{ form_registro.nombre.label }} {{ form_registro.nombre(class="form-control") }}
+                            <div>
+                                {% if form_registro.nombre.errors %}
+                                <div class="alert alert-danger">{{ form_registro.nombre.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_registro.celular.label }} {{ form_registro.celular(class="form-control") }}
+                            <div>
+                                {% if form_registro.celular.errors %}
+                                <div class="alert alert-danger">{{ form_registro.celular.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_registro.correo.label }} {{ form_registro.correo(class="form-control") }}
+                            <div>
+                                {% if form_registro.correo.errors %}
+                                <div class="alert alert-danger">{{ form_registro.correo.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_registro.password.label }} {{ form_registro.password(class="form-control") }}
+                            <div>
+                                {% if form_registro.password.errors %}
+                                <div class="alert alert-danger">{{ form_registro.password.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="justify-content-center">
+                            {{form_registro.submit_registro(class="btn btn-primary")}}</div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Columna de Inicio de Sesión -->
+        <div class="col-lg-6 mb-5 mt-3 text-center">
+            <div class="container pb-5 pt-5" style="background-color: rgba(255, 255, 255, 0.05);">
+                <div style="margin: 10px 10%; ">
+                    <div style="margin: 10px 10%;">
+                        <h2 class="mb-4">Iniciar Sesión</h2>
+                        <form action="{{ url_for('auth.login_registro') }}" method="post" autocomplete="off" novalidate
+                            autocomplete="off">
+                            {{ form_login.csrf_token }}
+
+                            <div class="form-group">
+                                {{ form_login.email.label }} {{ form_login.email(class="form-control") }}
+                                <div>
+                                    {% if form_login.email.errors %}
+                                    <div class="alert alert-danger">{{ form_login.email.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_login.password_l.label }} {{ form_login.password_l(class="form-control") }}
+                                <div>
+                                    {% if form_login.password_l.errors %}
+                                    <div class="alert alert-danger">{{ form_login.password_l.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="justify-content-center">
+                                {{form_login.submit_login(class="btn btn-primary")}}</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <hr>
+
+    {% endblock %}

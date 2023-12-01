@@ -1,0 +1,188 @@
+{% extends "base.html"%}
+{% block title %}Blue Bull Bar - Carrito{% endblock %}
+{% block content %}
+
+<!-- header -->
+<header id="home" class="header">
+    <div class="overlay text-white text-center"><br><br>
+        <h1 class="display-2 font-weight-bold pt-5 my-3">Blue Bull Bar</h1>
+        <h2 class="display-4 mb-5">Always fresh &amp; Delightful</h2>
+        <a class="btn btn-lg btn-primary" href="#menu">Gestiona tu carrito</a>
+        <!-- Mostrar mendajes flash -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="container">
+            {% for message in messages %}
+            <div class="alert alert-success">
+                <li>{{ message }}</li>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+</header>
+<!-- menu Section  -->
+<div id="menu" class="container-fluid bg-dark py-2 text-light text-center wow fadeIn">
+
+    <div class="tab-content" id="pills-tabContent">
+        <h2 class="mt-5 mb-5">Total a pagar: $ {{total}}</h2>
+
+        <div class="tab-pane fade show active" id="foods" role="tabpanel" aria-labelledby="pills-home-tab">
+            <div class="row gallary">
+                {% for item_cart in carrito %}
+                <div class="col-md-4">
+                    <div class="card bg-transparent border my-3 my-md-0" style="height: 670px;">
+                        <div class="gallary-item wow fadeIn" style="height: 300px;">
+                            {% if item_cart.imagen.startswith('http') %}
+                            <img src="{{ item_cart.imagen }}" alt="template by DevCRID http://www.devcrud.com/"
+                                class="rounded-0 card-img-top mg-responsive gallary-img">
+                            {% else %}
+                            <img src="{{ url_for('static', filename='img/menu/' + item_cart.imagen) }}"
+                                alt="template by DevCRID http://www.devcrud.com/"
+                                class="rounded-0 card-img-top mg-responsive gallary-img" style="max-height: 300px;">
+                            {% endif %}
+
+                        </div>
+                        <div class="card-body" style="height: 150px; overflow: hidden;">
+                            <!-- <h1 class="text-center mb-4"><a href="#" class="badge badge-primary">{{ item_cart.precio
+                                    }}</a></h1> -->
+                            <h5 class="">{{ item_cart.nombre }}<br> (Cat: {{ item_cart.categoria }})</h5>
+                            <h6 class="">Precio x Cantidad: $ <span id="precio_total_{{ item_cart.id }}">{{
+                                    item_cart.precio }}</span></h6>
+                            <p class="text-white">{{ item_cart.descripcion }}</p>
+                        </div>
+                        <div class="pb-3">
+                            <form action="{{ url_for('cart.editar_item', id=item_cart.id) }}" method="post"
+                                class="my-3">
+                                <label for="nueva_cantidad">Nueva Cantidad:</label>
+                                <div class="d-flex justify-content-center">
+                                    <input type="number" id="cantidad_{{ item_cart.id }}"
+                                        name="cantidad_{{ item_cart.id }}" value="{{ item_cart.cantidad }}" min="1"
+                                        required class="form-control" style="max-width: 150px;"
+                                        oninput="actualizar_precio('{{ item_cart.id }}')">
+                                </div><br>
+                                <input type="number" id="precio_{{ item_cart.id }}" name="precio_{{ item_cart.id }}"
+                                    value="{{ item_cart.precio_unidad }}" hidden>
+                                <input type="number" id="precio_x_cantidad_{{ item_cart.id }}"
+                                    name="precio_x_cantidad_{{ item_cart.id }}" value="{{ item_cart.precio }}" hidden>
+
+                                <div class="row" style="margin: 1px auto;">
+                                    <div class="col">
+                                        <button type="submit" id="actualizar_{{ item_cart.id }}"
+                                            class="btn btn-primary">Actualizar Cantidad</button>
+                                    </div>
+                                    <div class="col">
+                                        <a class="btn btn-danger"
+                                            href="{{ url_for('cart.eliminar_item', id=item_cart.id) }}">Eliminar del
+                                            Carrito</a>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <script>
+                                function actualizar_precio(productoId) {
+                                    let cantidad = document.getElementById(`cantidad_${productoId}`).value;
+                                    let precio = document.getElementById(`precio_${productoId}`).value;
+                                    let total = cantidad * precio;
+
+                                    if (cantidad > 0) {
+                                        document.getElementById(`actualizar_${productoId}`).disabled = false;
+                                        document.getElementById(`precio_total_${productoId}`).innerHTML = total; document.getElementById(`precio_x_cantidad_${productoId}`).value = total;
+                                    } else {
+                                        document.getElementById(`actualizar_${productoId}`).disabled = true;
+                                        document.getElementById(`precio_total_${productoId}`).innerHTML = 'Ingrese una cantidad'; document.getElementById(`precio_x_cantidad_${productoId}`).value = total;
+
+                                        document.getElementById(`precio_x_cantidad_${productoId}`).value = 0;
+                                    }
+                                }
+                            </script>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+
+
+
+            </div>
+        </div>
+
+        <br><br>
+        <hr>
+
+
+
+        {% if total_items > 0 %}
+        {% if 'email' in session %}
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalLong" style="font-size: 15pt;">
+            Comprar
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="color: black;">
+                    <div class="modal-header bg-success">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Productos en tu carrito</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Itera sobre los elementos del carrito -->
+                        {% for item_cart in carrito %}
+                        <div>
+                            <p>Nombre: {{ item_cart.nombre }} - Cantidad: {{ item_cart.cantidad }} <br> Precio: ${{
+                                item_cart.precio }}</p>
+                            <hr>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <a href="{{ url_for('compra.realizar_compra') }}" class="btn btn-primary">Completar Compra</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" style="font-size: 15pt;">
+            Comprar
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="color: black;">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title" id="exampleModalLongTitle">No has iniciado sesión</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <h3>Para realizar tu compra Regístrate o Inicia sesión</h3>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <a href="{{ url_for('auth.login_registro') }}" class="btn btn-primary">Ir a inicio de sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

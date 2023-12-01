@@ -1,0 +1,139 @@
+{% extends "base.html"%}
+{% block title %}Blue Bull Bar - Home{% endblock %}
+{% block content %}
+
+<!-- header -->
+<header id="home" class="header">
+    <div class="overlay text-white text-center"><br><br>
+        <h1 class="display-2 font-weight-bold  mt-5">Blue Bull Bar</h1>
+        <h2 class="display-4 mb-2">Always fresh &amp; Delightful</h2>
+
+        <!-- Mostrar mendajes flash -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="container">
+            {% for message in messages %}
+            <div class="alert alert-success">
+                <li>{{ message }}</li>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <a class="btn btn-lg btn-primary" href="#menu">Mira nuestro Menú</a>
+    </div>
+
+</header>
+<!-- menu Section  -->
+<div id="menu" class="container-fluid bg-dark text-light py-5 text-center wow fadeIn">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-12 mb-5">
+            <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+                <li class="nav-item"
+                    style="font-size: 15pt; color: #fff; border: solid 0.1px rgba(0,0,0,0.1); background-color: #08032033; ">
+                    <a class="nav-link {% if categoria == 'Platos de Entrada' %}active{% endif %}"
+                        href="{{url_for('inicio.platos_por_categoria', categoria='Entrada')}}">Platos de Entrada</a>
+                </li>
+                <li class="nav-item"
+                    style="font-size: 15pt; color: #fff; border: solid 0.1px rgba(0,0,0,0.1); background-color: #08032033; ">
+                    <a class="nav-link {% if categoria == 'Platos Principales' %}active{% endif %}"
+                        href="{{url_for('inicio.platos_por_categoria', categoria='Principal')}}">Platos
+                        principales</a>
+                </li>
+                <li class="nav-item"
+                    style="font-size: 15pt; color: #fff; border: solid 0.1px rgba(0,0,0,0.1); background-color: #08032033; ">
+                    <a class="nav-link {% if categoria == 'Platos para Compartir' %}active{% endif %}"
+                        href="{{url_for('inicio.platos_por_categoria', categoria='Compartir')}}">Platos para
+                        compartir</a>
+                </li>
+                <li class="nav-item"
+                    style="font-size: 15pt; color: #fff; border: solid 0.1px rgba(0,0,0,0.1); background-color: #08032033; ">
+                    <a class="nav-link {% if categoria == 'Postres' %}active{% endif %}"
+                        href="{{url_for('inicio.platos_por_categoria', categoria='Postre')}}">Postres</a>
+                </li>
+                <li class="nav-item"
+                    style="font-size: 15pt; color: #fff; border: solid 0.1px rgba(0,0,0,0.1); background-color: #08032033; ">
+                    <a class="nav-link {% if categoria == 'Bebidas' %}active{% endif %}"
+                        href="{{url_for('inicio.platos_por_categoria', categoria='Bebida')}}">Bebidas</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="tab-content" id="pills-tabContent">
+        <h2 class="section-title py-2">Nuestro Menú - {{categoria}}</h2>
+        <p style="font-size: 15pt;">Elige una imagen para más detalles</p>
+        <br>
+        <div class="tab-pane fade show active" id="foods" role="tabpanel" aria-labelledby="pills-home-tab">
+            <div class="row gallary">
+                {% for item_menu in menu %}
+                <div class="col-md-4">
+                    <div class="card bg-transparent border my-3 my-md-0">
+                        <div class="gallary-item wow fadeIn">
+                            {% if item_menu.imagen.startswith('http') %}
+                            <img src="{{ item_menu.imagen }}" alt="template by DevCRID http://www.devcrud.com/"
+                                class="rounded-0 card-img-top mg-responsive gallary-img">
+                            {% else %}
+                            <img src="{{ url_for('static', filename='img/menu/' + item_menu.imagen) }}"
+                                alt="template by DevCRID http://www.devcrud.com/"
+                                class="rounded-0 card-img-top mg-responsive gallary-img">
+                            {% endif %}
+                            <a href="{{ url_for('inicio.detalles',id=item_menu.id)}}" class="gallary-overlay">
+                                <i class="gallary-icon ti-plus"></i>
+                            </a>
+                        </div>
+                        <div class="card-body" style="height: 250px; overflow: hidden;">
+                            <h1 class="text-center mb-4"><a href="#" class="badge badge-primary">$ {{ item_menu.precio
+                                    }}</a></h1>
+                            <h4 class="pt20 pb20">{{ item_menu.nombre }}</h4>
+                            <p class="text-white">{{ item_menu.descripcion }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- REVIEWS Section  -->
+<div id="testmonial" class="container-fluid wow fadeIn bg-dark text-light has-height-lg middle-items">
+    <h2 class="section-title my-5 text-center">REVIEWS</h2>
+    <div class="row mt-3 mb-5">
+        <div class="col-md-4 my-3 my-md-0">
+            <div class="testmonial-card">
+                <h3 class="testmonial-title">John Doe</h3>
+                <h6 class="testmonial-subtitle">Web Designer</h6>
+                <div class="testmonial-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum nobis eligendi, quaerat
+                        accusamus ipsum sequi dignissimos consequuntur blanditiis natus. Aperiam!</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 my-3 my-md-0">
+            <div class="testmonial-card">
+                <h3 class="testmonial-title">Steve Thomas</h3>
+                <h6 class="testmonial-subtitle">UX/UI Designer</h6>
+                <div class="testmonial-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum minus obcaecati cum
+                        eligendi perferendis magni dolorum ipsum magnam, sunt reiciendis natus. Aperiam!</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 my-3 my-md-0">
+            <div class="testmonial-card">
+                <h3 class="testmonial-title">Miranda Joy</h3>
+                <h6 class="testmonial-subtitle">Graphic Designer</h6>
+                <div class="testmonial-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, nam. Earum nobis eligendi,
+                        dignissimos consequuntur blanditiis natus. Aperiam!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

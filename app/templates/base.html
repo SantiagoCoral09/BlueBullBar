@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="description" content="Start your development with FoodHut landing page.">
+    <meta name="author" content="Devcrud">
+
+    <link rel="icon" href="{{url_for('static',filename='imgs/logo.jpg')}}" type="image/x-icon">
+    <title>{% block title %}{% endblock %}</title>
+
+
+    <!-- font icons -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='vendors/themify-icons/css/themify-icons.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendors/animate/animate.css')}}">
+
+    <!-- Bootstrap + FoodHut main styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+
+    <nav class="custom-navbar navbar navbar-expand-lg navbar-dark fixed-top" data-spy="affix" data-offset-top="10">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link">BIENVENIDO
+                        {% if usuario %}
+                        <br>
+                        <span>{{usuario.nombres}}</span>
+                        {% endif %}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('inicio.home')}}">Inicio</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categorías
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item {% if categoria == 'Platos de Entrada' %}active{% endif %}"
+                            href="{{url_for('inicio.platos_por_categoria', categoria='Entrada')}}">Platos de Entrada</a>
+                        <a class="dropdown-item {% if categoria == 'Platos Principales' %}active{% endif %}"
+                            href="{{url_for('inicio.platos_por_categoria', categoria='Principal')}}">Platos
+                            principales</a>
+                        <a class="dropdown-item {% if categoria == 'Platos para Compartir' %}active{% endif %}"
+                            href="{{url_for('inicio.platos_por_categoria', categoria='Compartir')}}">Platos para
+                            compartir</a>
+                        <a class="dropdown-item {% if categoria == 'Postres' %}active{% endif %}"
+                            href="{{url_for('inicio.platos_por_categoria', categoria='Postre')}}">Postres</a>
+                        <a class="dropdown-item {% if categoria == 'Bebidas' %}active{% endif %}"
+                            href="{{url_for('inicio.platos_por_categoria', categoria='Bebida')}}">Bebidas</a>
+                    </div>
+                </li>
+            </ul>
+
+            <a class="navbar-brand m-auto" href="#">
+                <img src="{{ url_for('static', filename='imgs/logo.jpg')}}" class="brand-img"
+                    style="border-radius: 60px;" alt="">
+                <span class="brand-txt">Blue Bull Bar</span>
+            </a>
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+
+                <li class="nav-item">
+                    {% if 'email' in session %}
+                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCerrarSesion">
+                        Comprar
+                    </button> -->
+                    <a class="nav-link btn" data-toggle="modal" data-target="#modalCerrarSesion">Cerrar Sesión</a>
+                    {% else %}
+                    <a class="nav-link" href="{{ url_for('auth.login_registro')}}">Login/Cuenta</a>
+                    {% endif %}
+                </li>
+
+                <li class="nav-item nav-cart">
+                    <a href="{{ url_for('cart.mostrar_carrito')}}" style="color: #fff;">
+                        <img src="{{ url_for('static',filename='img/cart.png')}}" style="max-width: 100px;"
+                            class="rounded">
+                        {{total_items}}</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    {% block content %}
+    {% endblock %}
+    <br>
+    <!--  About Section  -->
+    <div id="about" class="container-fluid wow fadeIn " id="about" data-wow-duration="1.5s">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-6 middle-items mt-5 mb-5">
+                <div class="container">
+                    <div class="">
+                        <img src="{{ url_for('static', filename='imgs/book-table-img.jpg') }}" style="max-width: 100%;"
+                            class="img-fluid" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 px-5 middle-items mt-5 mb-5">
+                <h3>FIND US</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit, laboriosam doloremque odio delectus,
+                    sunt magnam laborum impedit molestiae, magni quae ipsum, ullam eos! Alias suscipit impedit et,
+                    adipisci illo quam.</p>
+                <div class="text-muted">
+                    <p><span class="ti-location-pin pr-3"></span> 12345 Fake ST NoWhere, AB Country</p>
+                    <p><span class="ti-support pr-3"></span> (123) 456-7890</p>
+                    <p><span class="ti-email pr-3"></span>info@website.com</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <!-- page footer  -->
+    <div class="container-fluid bg-dark text-light has-height-md middle-items border-top text-center wow fadeIn">
+        <div class="row">
+            <div class="col-sm-4  mt-3">
+                <h3>EMAIL US</h3>
+                <P class="text-muted">info@website.com</P>
+            </div>
+            <div class="col-sm-4">
+                <h3>CALL US</h3>
+                <P class="text-muted">(123) 456-7890</P>
+            </div>
+            <div class="col-sm-4">
+                <h3>FIND US</h3>
+                <P class="text-muted">12345 Fake ST NoWhere AB Country</P>
+            </div>
+        </div>
+    </div>
+    <div class="bg-dark text-light text-center border-top wow fadeIn">
+        <p class="mb-0 py-3 text-muted small">&copy; Copyright
+            <script>document.write(new Date().getFullYear())</script> Made with <i class="ti-heart text-danger"></i> By
+            <a href="http://devcrud.com">DevCRUD</a>
+        </p>
+    </div>
+    <!-- end of page footer -->
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalCerrarSesion" tabindex="-1" role="dialog" aria-labelledby="modalCerrarSesionTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="color: black;">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title" id="modalCerrarSesionTitle">¿Seguro quieres cerrar sesión?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <a href="{{ url_for('auth.cerrar_sesion') }}" class="btn btn-primary">Confirmar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- core  -->
+    <script src="{{ url_for('static', filename='vendors/jquery/jquery-3.4.1.js')}}"></script>
+    <script src="{{ url_for('static', filename='vendors/bootstrap/bootstrap.bundle.js')}}"></script>
+
+    <!-- bootstrap affix -->
+    <script src="{{ url_for('static', filename='vendors/bootstrap/bootstrap.affix.js')}}"></script>
+
+    <!-- wow.js -->
+    <script src="{{ url_for('static', filename='vendors/wow/wow.js')}}"></script>
+
+    <!-- google maps -->
+    <!-- <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtme10pzgKSPeJVJrG1O3tjR6lk98o4w8&callback=initMap"></script> -->
+
+    <!-- FoodHut js -->
+    <script src="{{ url_for('static', filename='js/foodhut.js')}}"></script>
+
+</body>
+
+</html>

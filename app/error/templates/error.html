@@ -1,0 +1,17 @@
+{% extends "base.html"%}
+{% block title %}Blue Bull Bar - Error{% endblock %}
+
+{% block content %}
+<header id="home" class="header">
+    <div class="overlay text-white text-center">
+        <br><br><br><br>
+        <h1 class=" font-weight-bold my-3">{{error}}</h1>
+        <h5 class="mb-5">Volver a la página de inicio</h5>
+        <a class="btn btn-lg btn-primary" href="{{url_for('inicio.home')}}">Home</a>
+    </div>
+</header>
+<div class="text-center">
+<img src="{{ url_for('static', filename='img/'+codigo+'.jpg')}}" />
+</div>
+
+{% endblock %}
