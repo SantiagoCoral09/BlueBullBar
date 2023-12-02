@@ -15,8 +15,3 @@ app.register_blueprint(cart_bp)
 app.register_blueprint(compra_bp)
 app.register_blueprint(error_bp)
 
-
-@app.route('/trigger-500')
-def trigger_500():
-    # Lanzar una excepción para provocar un error 500
-    raise Exception("Este es un error interno del servidor")

@@ -1,4 +1,4 @@
-from flask import render_template, session
+from flask import abort, render_template, session
 
 from app.services.usuario_service import obtener_por_email
 from . import inicio_bp
@@ -37,7 +37,7 @@ def platos_por_categoria(categoria):
     elif categoria=='Bebida':
         cat='Bebidas'
     else:
-        return render_template('error404.html'), 404
+        abort(404)
     
     # Obtener el id del usuario mediante el email
     usuario=None
@@ -50,16 +50,19 @@ def platos_por_categoria(categoria):
     
 @inicio_bp.route('/detalles/<id>')
 def detalles(id):
-    """Detalle del Plato"""
-    id=int(id)
-    item_menu=obtener_por_id(id)
-    print(item_menu)
+    try:
+        """Detalle del Plato"""
+        id=int(id)
+        item_menu=obtener_por_id(id)
+        print(item_menu)
 
-    cart=obtener_carrito()
+        cart=obtener_carrito()
 
-    usuario=None
-    if 'email' in session:
-        email_usuario=session['email']
-        usuario=obtener_por_email(email_usuario)
+        usuario=None
+        if 'email' in session:
+            email_usuario=session['email']
+            usuario=obtener_por_email(email_usuario)
 
-    return render_template('detalles.html', usuario=usuario, item_menu=item_menu, total_items=cart.total_items())
+        return render_template('detalles.html', usuario=usuario, item_menu=item_menu, total_items=cart.total_items())
+    except:
+        abort(400)

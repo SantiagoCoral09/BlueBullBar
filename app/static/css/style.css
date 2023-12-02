@@ -2777,9 +2777,9 @@ fieldset:disabled a.btn {
 }
 
 .btn-primary:hover {
-  color: #fff;
-  background-color: #fa0034;
-  border-color: #061135;
+  background-color: #337ab7;
+  color: #ffffff;
+  border: 1px solid #1b4fc0;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -2840,14 +2840,14 @@ fieldset:disabled a.btn {
 
 .btn-success {
   color: #212529;
-  background-color: #A3C14A;
-  border-color: #A3C14A;
+  background-color: #28a745;
+  border-color: #000;
 }
 
 .btn-success:hover {
   color: #fff;
   background-color: #8eaa3a;
-  border-color: #86a137;
+  border-color: #fff;
 }
 
 .btn-success:focus, .btn-success.focus {
@@ -2942,14 +2942,14 @@ fieldset:disabled a.btn {
 
 .btn-danger {
   color: #fff;
-  background-color: #F85C70;
-  border-color: #F85C70;
+  background-color: #df2b2b;
+  border-color: #000;
 }
 
 .btn-danger:hover {
   color: #fff;
-  background-color: #f63750;
-  border-color: #f62b45;
+  background-color: #c77905;
+  border-color: #fff;
 }
 
 .btn-danger:focus, .btn-danger.focus {
@@ -5709,8 +5709,8 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert-success {
-  color: #556426;
-  background-color: #edf3db;
+  color: #fff;
+  background-color: #1b7e32c9;
   border-color: #e5eecc;
 }
 
@@ -5737,8 +5737,8 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert-warning {
-  color: #854744;
-  background-color: #ffe7e6;
+  color: #fff;
+  background-color: #ffc107ad;
   border-color: #ffdedc;
 }
 
@@ -5751,8 +5751,8 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert-danger {
-  color: #81303a;
-  background-color: #fedee2;
+  color: #fff;
+  background-color: #dc3545e0;
   border-color: #fdd1d7;
 }
 
