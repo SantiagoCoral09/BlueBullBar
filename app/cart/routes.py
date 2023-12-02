@@ -30,6 +30,9 @@ def agregar_item(id_item):
         else:
             flash("Elija una cantidad correcta")
             return redirect(url_for('inicio.detalles', id=id_item))
+    else:
+        flash("Error interno")
+        return redirect(url_for('inicio.home'))
 
 @cart_bp.route('/mostrar_carrito')
 def mostrar_carrito():
