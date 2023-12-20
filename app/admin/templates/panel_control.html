@@ -8,8 +8,10 @@
     <meta name="author" content="Devcrud">
 
     <link rel="icon" href="{{url_for('static',filename='imgs/logo.jpg')}}" type="image/x-icon">
-    <title>{% block title %}{% endblock %}</title>
+    <title>BlueBullBar - Administrador</title>
 
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('admin.static', filename='css/style.css')}}">
 
     <!-- font icons -->
     <link rel="stylesheet" href="{{ url_for('static',filename='vendors/themify-icons/css/themify-icons.css') }}">
@@ -32,18 +34,16 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link">BIENVENIDO
-                        {% if usuario %}
                         <br>
                         <span>{{usuario.nombres}}</span>
-                        {% endif %}
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('inicio.home')}}">Inicio</a>
-                </li>
+                </li> -->
 
-                <li class="nav-item dropdown">
+                <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Categorías
@@ -62,7 +62,7 @@
                         <a class="dropdown-item {% if categoria == 'Bebidas' %}active{% endif %}"
                             href="{{url_for('inicio.platos_por_categoria', categoria='Bebida')}}">Bebidas</a>
                     </div>
-                </li>
+                </li> -->
             </ul>
 
             <a class="navbar-brand m-auto" href="#">
@@ -72,68 +72,126 @@
             </a>
 
             <ul class="navbar-nav">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#about">About</a>
-                </li>
+                </li> -->
 
                 <li class="nav-item">
                     {% if 'email' in session %}
-                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCerrarSesion">
-                        Comprar
-                    </button> -->
                     <a class="nav-link btn" data-toggle="modal" data-target="#modalCerrarSesion">Cerrar Sesión</a>
                     {% else %}
                     <a class="nav-link" href="{{ url_for('auth.login_registro')}}">Login/Cuenta</a>
                     {% endif %}
                 </li>
 
-                <li class="nav-item nav-cart">
+                <!-- <li class="nav-item nav-cart">
                     <a href="{{ url_for('cart.mostrar_carrito')}}" style="color: #fff;">
                         <img src="{{ url_for('static',filename='img/cart.png')}}" style="max-width: 100px;"
                             class="rounded">
-                        {{total_items_cart}}</a>
-                </li>
+                        {{total_items}}</a>
+                </li> -->
             </ul>
         </div>
     </nav>
 
-
-
-    {% block content %}
-    {% endblock %}
-    <br>
-    <!--  About Section  -->
-    <div id="about" class="container-fluid wow fadeIn " id="about" data-wow-duration="1.5s">
-        <div class="row align-items-center">
-            <div class="col-lg-6 col-md-6 middle-items mt-5 mb-5">
-                <div class="container">
-                    <div class="">
-                        <img src="{{ url_for('static', filename='imgs/book-table-img.jpg') }}" style="max-width: 100%;"
-                            class="img-fluid" alt="">
-                    </div>
+    <!-- header -->
+    <header id="home" class="header">
+        <div class="overlay text-white text-center"><br><br><br>
+            <h1 class="display-2 font-weight-bold my-3">Blue Bull Bar</h1>
+            <h2 class="display-4 mb-5">Always fresh &amp; Delightful</h2>
+            <a class="btn btn-lg btn-primary" href="#admin">Administrar productos</a>
+            <hr>
+            <!-- Mostrar mendajes flash -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class="">
+                {% for message in messages %}
+                <div class="alert alert-warning">
+                    <li>{{ message }}</li>
                 </div>
-            </div>
-            <div class="col-md-6 px-5 middle-items mt-5 mb-5">
-                <h3>FIND US</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit, laboriosam doloremque odio delectus,
-                    sunt magnam laborum impedit molestiae, magni quae ipsum, ullam eos! Alias suscipit impedit et,
-                    adipisci illo quam.</p>
-                <div class="text-muted">
-                    <p><span class="ti-location-pin pr-3"></span> 12345 Fake ST NoWhere, AB Country</p>
-                    <p><span class="ti-support pr-3"></span> (123) 456-7890</p>
-                    <p><span class="ti-email pr-3"></span>info@website.com</p>
-                </div>
-            </div>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
         </div>
+    </header>
 
+    <div id="admin" class="container-fluid wow fadeIn">
+        <h2 class="text-center mt-3">Gestión de Productos en Inventario. <span class="text-right">Total:
+                {{total}}</span> </h2><br>
+        <div class="text-right">
+            <!-- <h4>Total: {{total}}</h4> -->
+
+            <button class="btn btn-primary" id="agregar">+ Agregar nuevo</button>
+        </div>
+        <br>
+        <div class="pagination">
+            {{ pagination.info }}
+        </div>
+        <div class="d-flex justify-content-center">
+            {{ pagination.links }}
+
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr class="text-center">
+                        <th class="id">ID</th>
+                        <th class="imagen">Imagen</th>
+                        <th>Nombre</th>
+                        <th class="tipo">Precio</th>
+                        <th class="descripcion">Descripción</th>
+                        <th class="tipo">Categoría</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items_menu %}
+                    <tr>
+                        <td>{{item.id}}{% if item.imagen.startswith('http') %}
+                            <img src="{{ item.imagen }}" alt="template by..." width="50">
+                            {% else %}
+                            <img src="{{ url_for('static', filename='img/menu/' + item.imagen) }}" alt="template by---"
+                                width="50">
+                            {% endif %}
+                        </td>
+                        <td><textarea type="text" class="form-control" name="imagen" required>{{item.imagen}}</textarea>
+                        </td>
+                        <td><textarea type="text" class="form-control" name="nombre" required>{{item.nombre}}</textarea>
+                        </td>
+                        <td><textarea type="number" class="form-control" name="precio"
+                                required>{{item.precio}}</textarea>
+                        </td>
+                        <td><textarea class="form-control" name="descripcion" required>{{item.descripcion}}</textarea>
+                        </td>
+                        <td>{{item.categoria}}<select class="form-control" id="categoria" name="categoria" required>
+                                <!-- <option value="null">Seleccione una opción</option> -->
+                                <option value="Entrada" {% if item.categoria=='Entrada' %} selected {% endif %}>Platos
+                                    de Entrada</option>
+                                <option value="Principal" {% if item.categoria=='Principal' %} selected {% endif %}>
+                                    Platos principales</option>
+                                <option value="Compartir" {% if item.categoria=='Compartir' %} selected {% endif %}>
+                                    Platos para compartir</option>
+                                <option value="Postre" {% if item.categoria=='Postre' %} selected {% endif %}>Postres
+                                </option>
+                                <option value="Bebida" {% if item.categoria=='Bebida' %} selected {% endif %}>Bebidas
+                                </option>
+                            </select></td>
+                        <td class="text-center">
+                            <button class="btn btn-success btn-sm">Guardar</button>
+                            <button class="btn btn-danger btn-sm mt-1">Eliminar</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-center">
+            {{ pagination.links }}
+
+        </div>
     </div>
-
-
-
-
-
-
-
 
 
 
@@ -201,7 +259,7 @@
 
     <!-- google maps -->
     <!-- <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtme10pzgKSPeJVJrG1O3tjR6lk98o4w8&callback=initMap"></script> -->
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtme10pzgKSPeJVJrG1O3tjR6lk98o4w8&callback=initMap"></script> -->
 
     <!-- FoodHut js -->
     <script src="{{ url_for('static', filename='js/foodhut.js')}}"></script>

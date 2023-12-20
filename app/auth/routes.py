@@ -9,6 +9,8 @@ from . import auth_bp
 @auth_bp.route('/login_registro', methods=["GET", "POST"])
 def login_registro():
     if 'email' in session:
+        if session['tipo_usuario']=='admin':
+            return redirect(url_for('admin.panel_control'))
         return redirect(url_for('inicio.home'))
     cart = obtener_carrito()
     form_registro = RegistroForm(request.form)
@@ -21,7 +23,7 @@ def login_registro():
         if existe_usuario:
             print('Correo ya existe')
             flash('El correo electrónico ya está registrado. Inicia sesión si ya tienes una cuenta.')
-            return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items=cart.total_items())
+            return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items_cart=cart.total_items())
         else:
                     # Si el correo no está registrado, procede con el registro
             nuevo_usuario = Usuario(
@@ -35,12 +37,13 @@ def login_registro():
             if agregar_usuario(nuevo_usuario):
                 print('Se registro')
                 session['email']=nuevo_usuario.email
+                session['tipo_usuario']='public'
                 flash("Te has registrado exitosamente!!!")
                 return redirect(url_for('inicio.home'))
             else:
                 print('Problema de registro')
                 flash('Hubo un problema durante el registro. Por favor, inténtalo de nuevo.')
-                return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items=cart.total_items())
+                return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items_cart=cart.total_items())
 
     elif form_login.submit_login.data and form_login.validate_on_submit():
         # Llega el formulario de login
@@ -50,30 +53,37 @@ def login_registro():
             print('Correo existe')
             if(existe_usuario.password==form_login.password_l.data):
                 session['email']=existe_usuario.email
+                session['tipo_usuario']=existe_usuario.tipo_usuario
                 print('Inicio de sesion exitoso')
                 flash('Inicio de sesion exitoso')
+                print(f"***Tipo de usuario***{existe_usuario.tipo_usuario}")
 
-                return redirect(url_for('inicio.home'))
+                if existe_usuario.tipo_usuario=='admin':
+                    # Si el usuario esta regisrrado como un administrador
+                    return redirect(url_for('admin.panel_control'))
+                else:
+                    return redirect(url_for('inicio.home'))
             else:
                 print('Contraseña incorrecta')
                 flash('La contraseña es incorrecta. Intenta nuevamente.')
-            return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items=cart.total_items())
+            return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items_cart=cart.total_items())
         else:
             # Si el correo no está registrado
         
             flash('Hubo un problema, el correo ingresado no está registrado')
             flash('Si no tienes cuenta debes registrarte')
-            return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items=cart.total_items())
+            return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items_cart=cart.total_items())
 
     else:
         
 
-        return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items=cart.total_items())
+        return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items_cart=cart.total_items())
 
 @auth_bp.route('/cerrar_sesion')
 def cerrar_sesion():
     """Cierra la sesión del usuario"""
     # Eliminar la clave 'email' de la sesión
     session.pop('email', None)
+    session.pop('tipo_usuario', None)
     return redirect(url_for('inicio.home'))
 

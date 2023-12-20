@@ -63,7 +63,17 @@
         <h2 class="section-title py-2">Nuestro Menú - {{categoria}}</h2>
         <p style="font-size: 15pt;">Elige una imagen para más detalles</p>
         <br>
+        
+        <div class="d-flex justify-content-center">
+            {{ pagination.links }}
+
+        </div>
+        
         <div class="tab-pane fade show active" id="foods" role="tabpanel" aria-labelledby="pills-home-tab">
+            <div class="text-center">
+                {{ pagination.info }}
+            </div>
+            <br>
             <div class="row gallary">
                 {% for item_menu in menu %}
                 <div class="col-md-4">
@@ -98,6 +108,10 @@
 
 
     </div>
+</div>
+<div class="d-flex justify-content-center">
+    {{ pagination.links }}
+
 </div>
 
 <!-- REVIEWS Section  -->
