@@ -1,8 +1,10 @@
-from flask import redirect, render_template, request, session, url_for
+from flask import flash, redirect, render_template, request, session, url_for
 from app.admin import admin_bp
-from app.services.menu_service import  PER_PAGE, obtener_menu_paginate, obtener_total_menu
+from app.admin.form import ProductForm
+from app.services.menu_service import  PER_PAGE, agregar_item, eliminar_item, modificar_item, obtener_menu_paginate, obtener_por_id, obtener_total_menu
 from app.services.usuario_service import obtener_por_email
 from flask_paginate import Pagination
+from app.models.menu import MenuItem
 
 @admin_bp.route('/panel_control')
 def panel_control():
@@ -21,5 +23,92 @@ def panel_control():
         display_msg="Mostrando {start} - {end} de {total} registros en total")
 
         return render_template('panel_control.html', usuario=usuario, items_menu=items_menu, total=total_items, pagination=pagination)
+    else:
+        return redirect(url_for('inicio.home'))
+
+@admin_bp.route('/agregar', methods=['GET', 'POST'])
+def agregar():
+    usuario=None
+    if 'email' in session and session['tipo_usuario']=='admin':
+        email_usuario=session['email']
+        usuario=obtener_por_email(email_usuario)
+
+        form = ProductForm(request.form)
+        if form.submit_agregar.data:
+            if form.validate_on_submit():
+                # Guarda el producto y redirige a la lista de productos
+                nuevo_item=MenuItem(id=None,nombre=form.nombre.data, descripcion=form.descripcion.data, precio=form.precio.data, categoria=form.categoria.data, imagen=form.imagen.data)
+
+                try:
+                    if agregar_item(nuevo_item):
+                        print('Se guardado con exito')
+                        flash("Guardado con exito","success")
+                        return redirect(url_for('admin.panel_control'))
+                    else:
+                        print('Error al guardar')
+                        flash("Error al guardar el item", "danger")
+                except Exception as e:
+                    print(f"Se produjo la excepcion: {e}")
+                    flash("Error desconocido", "warning")
+            else:
+                flash("Datos incorrectos","warning")
+                # return render_template("agregar_producto.html",usuario=usuario, form=form)
+
+        return render_template("agregar_producto.html",usuario=usuario, form=form)
+    else:
+        return redirect(url_for('inicio.home'))
+    
+@admin_bp.route('/modificar/<item_id>', methods=['GET', 'POST'])
+def modificar(item_id):
+    usuario=None
+    if 'email' in session and session['tipo_usuario']=='admin':
+        email_usuario=session['email']
+        usuario=obtener_por_email(email_usuario)
+        item=obtener_por_id(item_id)
+        print(f"Item con id: {item_id}")
+        print(item)
+        if request.method == 'POST':
+            # Obtén los datos del formulario oculto
+            nombre = request.form.get('nombre')
+            precio = request.form.get('precio')
+            descripcion=request.form.get('descripcion')
+            imagen=request.form.get('imagen')
+            categoria=request.form.get('categoria')
+            item_modificar=MenuItem(id=item_id,nombre=nombre,descripcion=descripcion,precio=precio,categoria=categoria,imagen=imagen)
+
+            try:
+                if modificar_item(item_modificar):
+                    print('Se guardado con exito')
+                    flash("Guardado con exito","success")
+                    return redirect(url_for('admin.panel_control'))
+                else:
+                    print('Error al guardar')
+                    flash("Error al guardar el item", "danger")
+            except Exception as e:
+                print(f"Se produjo la excepcion: {e}")
+                flash("Error desconocido", "warning")
+
+
+        return redirect(url_for('admin.panel_control'))
+    else:
+        return redirect(url_for('inicio.home'))
+    
+@admin_bp.route('/eliminar/<item_id>', methods=['GET', 'POST'])
+def eliminar(item_id):
+    usuario=None
+    if 'email' in session and session['tipo_usuario']=='admin':
+        email_usuario=session['email']
+        usuario=obtener_por_email(email_usuario)
+        item=obtener_por_id(item_id)
+        print(f"Item con id: {item_id}")
+        print(item)
+        if request.method == 'GET':
+            print(item_id)
+            if eliminar_item(item_id):
+                flash("Eliminación exitosa","success")
+            else:  
+                flash("No se pudo eliminar el elemento","danger")
+
+        return redirect(url_for('admin.panel_control'))
     else:
         return redirect(url_for('inicio.home'))

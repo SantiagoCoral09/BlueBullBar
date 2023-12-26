@@ -1,162 +1,63 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends "base_admin.html"%}
+{% block title %}Administrador - Menu{% endblock %}
+{% block content %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
-    <meta name="description" content="Start your development with FoodHut landing page.">
-    <meta name="author" content="Devcrud">
+<div id="admin" class="container-fluid wow fadeIn">
+    <h2 class="text-center mt-3">Gestión de Productos en Inventario. <span class="text-right">Total:
+            {{total}}</span> </h2><br>
+    <div class="text-right">
+        <!-- <h4>Total: {{total}}</h4> -->
 
-    <link rel="icon" href="{{url_for('static',filename='imgs/logo.jpg')}}" type="image/x-icon">
-    <title>BlueBullBar - Administrador</title>
+        <a class="btn btn-primary" id="agregar" href="{{url_for('admin.agregar')}}">+ Agregar nuevo</a>
+    </div>
+    <br>
+    <div class="pagination">
+        {{ pagination.info }}
+    </div>
+    <div class="d-flex justify-content-center">
+        {{ pagination.links }}
 
-
-    <link rel="stylesheet" type="text/css" href="{{url_for('admin.static', filename='css/style.css')}}">
-
-    <!-- font icons -->
-    <link rel="stylesheet" href="{{ url_for('static',filename='vendors/themify-icons/css/themify-icons.css') }}">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='vendors/animate/animate.css')}}">
-
-    <!-- Bootstrap + FoodHut main styles -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-
-<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
-
-    <nav class="custom-navbar navbar navbar-expand-lg navbar-dark fixed-top" data-spy="affix" data-offset-top="10">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link">BIENVENIDO
-                        <br>
-                        <span>{{usuario.nombres}}</span>
-                    </a>
-                </li>
-
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('inicio.home')}}">Inicio</a>
-                </li> -->
-
-                <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Categorías
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item {% if categoria == 'Platos de Entrada' %}active{% endif %}"
-                            href="{{url_for('inicio.platos_por_categoria', categoria='Entrada')}}">Platos de Entrada</a>
-                        <a class="dropdown-item {% if categoria == 'Platos Principales' %}active{% endif %}"
-                            href="{{url_for('inicio.platos_por_categoria', categoria='Principal')}}">Platos
-                            principales</a>
-                        <a class="dropdown-item {% if categoria == 'Platos para Compartir' %}active{% endif %}"
-                            href="{{url_for('inicio.platos_por_categoria', categoria='Compartir')}}">Platos para
-                            compartir</a>
-                        <a class="dropdown-item {% if categoria == 'Postres' %}active{% endif %}"
-                            href="{{url_for('inicio.platos_por_categoria', categoria='Postre')}}">Postres</a>
-                        <a class="dropdown-item {% if categoria == 'Bebidas' %}active{% endif %}"
-                            href="{{url_for('inicio.platos_por_categoria', categoria='Bebida')}}">Bebidas</a>
-                    </div>
-                </li> -->
-            </ul>
-
-            <a class="navbar-brand m-auto" href="#">
-                <img src="{{ url_for('static', filename='imgs/logo.jpg')}}" class="brand-img"
-                    style="border-radius: 60px;" alt="">
-                <span class="brand-txt">Blue Bull Bar</span>
-            </a>
-
-            <ul class="navbar-nav">
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#about">About</a>
-                </li> -->
-
-                <li class="nav-item">
-                    {% if 'email' in session %}
-                    <a class="nav-link btn" data-toggle="modal" data-target="#modalCerrarSesion">Cerrar Sesión</a>
-                    {% else %}
-                    <a class="nav-link" href="{{ url_for('auth.login_registro')}}">Login/Cuenta</a>
-                    {% endif %}
-                </li>
-
-                <!-- <li class="nav-item nav-cart">
-                    <a href="{{ url_for('cart.mostrar_carrito')}}" style="color: #fff;">
-                        <img src="{{ url_for('static',filename='img/cart.png')}}" style="max-width: 100px;"
-                            class="rounded">
-                        {{total_items}}</a>
-                </li> -->
-            </ul>
-        </div>
-    </nav>
-
-    <!-- header -->
-    <header id="home" class="header">
-        <div class="overlay text-white text-center"><br><br><br>
-            <h1 class="display-2 font-weight-bold my-3">Blue Bull Bar</h1>
-            <h2 class="display-4 mb-5">Always fresh &amp; Delightful</h2>
-            <a class="btn btn-lg btn-primary" href="#admin">Administrar productos</a>
-            <hr>
-            <!-- Mostrar mendajes flash -->
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <ul class="">
-                {% for message in messages %}
-                <div class="alert alert-warning">
-                    <li>{{ message }}</li>
-                </div>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            {% endwith %}
-        </div>
-    </header>
-
-    <div id="admin" class="container-fluid wow fadeIn">
-        <h2 class="text-center mt-3">Gestión de Productos en Inventario. <span class="text-right">Total:
-                {{total}}</span> </h2><br>
-        <div class="text-right">
-            <!-- <h4>Total: {{total}}</h4> -->
-
-            <button class="btn btn-primary" id="agregar">+ Agregar nuevo</button>
-        </div>
-        <br>
-        <div class="pagination">
-            {{ pagination.info }}
-        </div>
-        <div class="d-flex justify-content-center">
-            {{ pagination.links }}
-
-        </div>
-        <div class="table-responsive">
-            <table class="table table-bordered ">
-                <thead>
-                    <tr class="text-center">
-                        <th class="id">ID</th>
-                        <th class="imagen">Imagen</th>
-                        <th>Nombre</th>
-                        <th class="tipo">Precio</th>
-                        <th class="descripcion">Descripción</th>
-                        <th class="tipo">Categoría</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in items_menu %}
-                    <tr>
-                        <td>{{item.id}}{% if item.imagen.startswith('http') %}
-                            <img src="{{ item.imagen }}" alt="template by..." width="50">
-                            {% else %}
-                            <img src="{{ url_for('static', filename='img/menu/' + item.imagen) }}" alt="template by---"
-                                width="50">
-                            {% endif %}
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered ">
+            <thead>
+                <tr class="text-center">
+                    <th class="id">ID</th>
+                    <th class="imagen">Imagen</th>
+                    <th>Nombre</th>
+                    <th class="tipo">Precio</th>
+                    <th class="descripcion">Descripción</th>
+                    <th class="tipo">Categoría</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items_menu %}
+                <tr>
+                    <form action="{{url_for('admin.modificar',item_id=item.id)}}" method="post">
+                        <td>{{item.id}}
+                            <div id="carga_imagen{{item.id}}">
+                                {% if item.imagen.startswith('http') %}
+                                <img src="{{ item.imagen }}" alt="template by..." width="50">
+                                {% else %}
+                                <img src="{{ url_for('static', filename='img/menu/' + item.imagen) }}"
+                                    alt="template by---" width="50">
+                                {% endif %}
+                            </div>
                         </td>
-                        <td><textarea type="text" class="form-control" name="imagen" required>{{item.imagen}}</textarea>
+                        <td><textarea type="text" class="form-control" name="imagen" id="imagen{{item.id}}"
+                                oninput="cargarImagen();" required>{{item.imagen}}</textarea>
                         </td>
+                        <script>
+                            function cargarImagen() {
+                                let url_img = document.getElementById('imagen{{item.id}}').value;
+                                console.log('Se mostrara la imagen');
+                                console.log(url_img);
+                                document.getElementById('carga_imagen{{item.id}}').innerHTML = '<img src="' + url_img + '" alt="..." width="50">'
+                        
+                            }
+                        </script>
+
                         <td><textarea type="text" class="form-control" name="nombre" required>{{item.nombre}}</textarea>
                         </td>
                         <td><textarea type="number" class="form-control" name="precio"
@@ -178,92 +79,45 @@
                                 </option>
                             </select></td>
                         <td class="text-center">
-                            <button class="btn btn-success btn-sm">Guardar</button>
-                            <button class="btn btn-danger btn-sm mt-1">Eliminar</button>
+                            <button type="submit" class="btn btn-success btn-sm">Modificar</button>
+                            <a data-toggle="modal" data-target="#modalEliminar{{item.id}}"
+                                class="btn btn-danger btn-sm mt-1">Eliminar</a>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="modalEliminar{{item.id}}" tabindex="-1" role="dialog"
+                                aria-labelledby="modalEliminar{{item.id}}Title" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content" style="color: black;">
+                                        <div class="modal-header bg-danger">
+                                            <h5 class="modal-title" id="modalEliminar{{item.id}}Title">¿Seguro quieres
+                                                eliminar el item {{item.id}}: {{item.nombre}}?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cancelar</button>
+                                            <a href=" {{url_for('admin.eliminar',item_id=item.id)}}"
+                                                class="btn btn-primary">Confirmar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
-                    </tr>
-                    {% endfor %}
+                    </form>
+                </tr>
+                {% endfor %}
 
-                </tbody>
-            </table>
-        </div>
-        <div class="d-flex justify-content-center">
-            {{ pagination.links }}
-
-        </div>
+            </tbody>
+        </table>
     </div>
+    <div class="d-flex justify-content-center">
+        {{ pagination.links }}
 
-
-
-    <!-- page footer  -->
-    <div class="container-fluid bg-dark text-light has-height-md middle-items border-top text-center wow fadeIn">
-        <div class="row">
-            <div class="col-sm-4  mt-3">
-                <h3>EMAIL US</h3>
-                <P class="text-muted">info@website.com</P>
-            </div>
-            <div class="col-sm-4">
-                <h3>CALL US</h3>
-                <P class="text-muted">(123) 456-7890</P>
-            </div>
-            <div class="col-sm-4">
-                <h3>FIND US</h3>
-                <P class="text-muted">12345 Fake ST NoWhere AB Country</P>
-            </div>
-        </div>
     </div>
-    <div class="bg-dark text-light text-center border-top wow fadeIn">
-        <p class="mb-0 py-3 text-muted small">&copy; Copyright
-            <script>document.write(new Date().getFullYear())</script> Made with <i class="ti-heart text-danger"></i> By
-            <a href="http://devcrud.com">DevCRUD</a>
-        </p>
-    </div>
-    <!-- end of page footer -->
+</div>
 
 
 
-
-    <!-- Modal -->
-    <div class="modal fade" id="modalCerrarSesion" tabindex="-1" role="dialog" aria-labelledby="modalCerrarSesionTitle"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" style="color: black;">
-                <div class="modal-header bg-danger">
-                    <h5 class="modal-title" id="modalCerrarSesionTitle">¿Seguro quieres cerrar sesión?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <a href="{{ url_for('auth.cerrar_sesion') }}" class="btn btn-primary">Confirmar</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-    <!-- core  -->
-    <script src="{{ url_for('static', filename='vendors/jquery/jquery-3.4.1.js')}}"></script>
-    <script src="{{ url_for('static', filename='vendors/bootstrap/bootstrap.bundle.js')}}"></script>
-
-    <!-- bootstrap affix -->
-    <script src="{{ url_for('static', filename='vendors/bootstrap/bootstrap.affix.js')}}"></script>
-
-    <!-- wow.js -->
-    <script src="{{ url_for('static', filename='vendors/wow/wow.js')}}"></script>
-
-    <!-- google maps -->
-    <!-- <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtme10pzgKSPeJVJrG1O3tjR6lk98o4w8&callback=initMap"></script> -->
-
-    <!-- FoodHut js -->
-    <script src="{{ url_for('static', filename='js/foodhut.js')}}"></script>
-
-</body>
-
-</html>
+{% endblock %}

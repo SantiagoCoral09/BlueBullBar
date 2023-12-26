@@ -55,7 +55,7 @@ def login_registro():
                 session['email']=existe_usuario.email
                 session['tipo_usuario']=existe_usuario.tipo_usuario
                 print('Inicio de sesion exitoso')
-                flash('Inicio de sesion exitoso')
+                flash('Inicio de sesion exitoso','success')
                 print(f"***Tipo de usuario***{existe_usuario.tipo_usuario}")
 
                 if existe_usuario.tipo_usuario=='admin':

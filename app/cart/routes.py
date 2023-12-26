@@ -46,7 +46,7 @@ def mostrar_carrito():
         email_usuario=session['email']
         usuario=obtener_por_email(email_usuario)
 
-    return render_template("carrito.html", usuario=usuario, carrito=carrito, total=total, total_items=cart.total_items())
+    return render_template("carrito.html", usuario=usuario, carrito=carrito, total=total, total_items_cart=cart.total_items())
 
 @cart_bp.route('/editar_item/<id>', methods=['POST'])
 def editar_item(id):

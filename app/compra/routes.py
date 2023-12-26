@@ -61,6 +61,6 @@ def realizar_compra():
             else:
                 flash("Error de validación del formluario")
 
-        return render_template('realizar_compra.html', usuario=usuario, form=form_compra, carrito=carrito, total=total, total_items=cart.total_items())
+        return render_template('realizar_compra.html', usuario=usuario, form=form_compra, carrito=carrito, total=total, total_items_cart=cart.total_items())
     else:
         return redirect(url_for("auth.login_registro"))

@@ -1,0 +1,88 @@
+{% extends "base_admin.html"%}
+{% block title %}Administrador - Agregar Menu{% endblock %}
+{% block content %}
+
+<div id="admin" class="container-fluid wow fadeIn">
+    <br>
+    <div class="container" style="background-color: rgba(255, 255, 255, 0.05);">
+        <h2 class="text-center">Registro de Productos en Inventario</h2><br>
+        <div class="text-right">
+            <a class="btn btn-primary" href="{{url_for('admin.panel_control')}}">Listar inventario</a>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-8 mb-5 mt-3">
+                <div class="container">
+                    <form action="{{url_for('admin.agregar')}}" method="post" novalidate>
+                        {{ form.csrf_token }}
+                        <div class="form-group">
+                            {{ form.nombre.label }} {{ form.nombre(class="form-control") }}
+                            <div>
+                                {% if form.nombre.errors %}
+                                <div class="alert alert-danger">{{ form.nombre.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.descripcion.label }} {{ form.descripcion(class="form-control") }}
+                            <div>
+                                {% if form.descripcion.errors %}
+                                <div class="alert alert-danger">{{ form.descripcion.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.precio.label }} {{ form.precio(class="form-control") }}
+                            <div>
+                                {% if form.precio.errors %}
+                                <div class="alert alert-danger">{{ form.precio.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.categoria.label }} {{ form.categoria(class="form-control") }}
+                            <div>
+                                {% if form.categoria.errors %}
+                                <div class="alert alert-danger">{{ form.categoria.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.imagen.label }} {{ form.imagen(class="form-control",placeholder='https://...',
+                            oninput='cargarImagen();') }}
+                            <div>
+                                {% if form.imagen.errors %}
+                                <div class="alert alert-danger">{{ form.imagen.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="justify-content-center">
+                            {{form.submit_agregar(class="btn btn-primary")}}</div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3 d-flex justify-content-center" id="cargar_imagen" onload="cargarImagen();">
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    // Ejecutar cargarImagen() cuando se carga la página
+    document.addEventListener('DOMContentLoaded', function () {
+        cargarImagen();
+    });
+    function cargarImagen() {
+        let url_img = document.getElementById('imagen').value;
+        console.log('Se mostrara la imagen');
+        console.log(url_img);
+        document.getElementById('cargar_imagen').innerHTML = '<img src="' + url_img + '" alt="img..." style="max-width:250px; max-height:500px;">'
+    }
+</script>
+
+{% endblock %}
