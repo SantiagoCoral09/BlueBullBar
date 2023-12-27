@@ -73,3 +73,21 @@ def agregar_usuario(usuario):
     except Exception as e:
         print(f"Error al agregar usuario: {e}")
         return False
+    
+def actualizarUsuario(usuario: Usuario):
+    try:
+        db_path = current_app.config['DATABASE_URI'].replace('sqlite:///','')
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        # Actualizamos el registro en la tabla Usuario
+        sql = """UPDATE Usuario SET nombres = ?, celular = ?, email = ?, password=?, tipo_usuario = ? WHERE id = ?;"""
+        params = (usuario.nombres, usuario.celular, usuario.email, usuario.password, 
+                  usuario.tipo_usuario, usuario.id)
+        cursor.execute(sql,params)
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Error al actualizar usuario: {e}")
+        return False
+    

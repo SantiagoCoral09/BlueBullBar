@@ -9,17 +9,28 @@
         <h2 class="display-4 mb-5">Always fresh &amp; Delightful</h2>
         <a class="btn btn-lg btn-primary" href="#menu">Gestiona tu carrito</a>
         <!-- Mostrar mendajes flash -->
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-        <ul class="container">
-            {% for message in messages %}
-            <div class="alert alert-success">
+        <ul class="">
+            {% for category, message in messages %}
+            <div id="mensajes" class="alert alert-{{category}}">
                 <li>{{ message }}</li>
             </div>
             {% endfor %}
         </ul>
         {% endif %}
         {% endwith %}
+
+        <script>
+            // Ocultar mensajes después de 5 segundos
+            setTimeout(function() {
+                let mensajes = document.getElementById('mensajes');
+                if(mensajes){
+                    mensajes.style.display = 'none';
+                }
+            }, 5000); // 5000 milisegundos = 5 segundos
+        </script>
+        
     </div>
 </header>
 <!-- menu Section  -->

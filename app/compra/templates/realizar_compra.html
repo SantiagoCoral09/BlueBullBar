@@ -10,11 +10,11 @@
         <a class="btn btn-lg btn-primary" href="#comprar">Información para tu compra</a>
     </div>
     <!-- Mostrar mendajes flash -->
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     <ul class="">
-        {% for message in messages %}
-        <div class="alert alert-danger">
+        {% for category, message in messages %}
+        <div class="alert alert-{{category}}">
             <li>{{ message }}</li>
         </div>
         {% endfor %}

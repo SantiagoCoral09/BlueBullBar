@@ -55,11 +55,11 @@ def realizar_compra():
                             return redirect(url_for("inicio.home"))
                         
                     else:
-                        flash(f"Error al guardar la compra")
+                        flash(f"Error al guardar la compra",'warning')
                 except Exception as e:
-                    flash(f"Se produjo el error: {e}")
+                    flash(f"Se produjo el error: {e}",'danger')
             else:
-                flash("Error de validación del formluario")
+                flash("Error de validación del formluario",'warning')
 
         return render_template('realizar_compra.html', usuario=usuario, form=form_compra, carrito=carrito, total=total, total_items_cart=cart.total_items())
     else:

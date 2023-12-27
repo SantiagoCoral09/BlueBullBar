@@ -25,13 +25,13 @@ def agregar_item(id_item):
             print(cart.obtener_items_carrito())
 
             
-            flash(f"Se agregó {obtener_por_id(id_item).nombre} al carrito")
+            flash(f"Se agregó {obtener_por_id(id_item).nombre} al carrito",'success')
             return redirect(url_for('inicio.home'))
         else:
-            flash("Elija una cantidad correcta")
+            flash("Elija una cantidad correcta",'warning')
             return redirect(url_for('inicio.detalles', id=id_item))
     else:
-        flash("Error interno")
+        flash("Error interno",'danger')
         return redirect(url_for('inicio.home'))
 
 @cart_bp.route('/mostrar_carrito')
@@ -64,7 +64,7 @@ def editar_item(id):
             session['cart'] = cart.to_dict()
 
             # Mostrar un mensaje del producto actualizado
-            flash(f"Se actualizó la cantidad de {obtener_por_id(id).nombre}")
+            flash(f"Se actualizó la cantidad de {obtener_por_id(id).nombre}",'success')
         return redirect(url_for('cart.mostrar_carrito'))
 
 @cart_bp.route('/eliminar_item/<id>')
@@ -80,5 +80,5 @@ def eliminar_item(id):
 
     
     # Mostrar un mensaje del producto actualizado
-    flash(f"Se eliminó del carrito {obtener_por_id(id).nombre}")
+    flash(f"Se eliminó del carrito {obtener_por_id(id).nombre}",'warning')
     return redirect(url_for('cart.mostrar_carrito'))

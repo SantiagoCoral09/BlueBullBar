@@ -4,7 +4,7 @@ from app.config.config import Config, MAIL_USERNAME, mail
 from app.models.usuario import Usuario
 from app.services.cart import obtener_carrito
 from app.services.auth_service import verificar_email, verificar_password
-from app.services.usuario_service import agregar_usuario, obtener_por_email
+from app.services.usuario_service import actualizarUsuario, agregar_usuario, obtener_por_email
 from . import auth_bp
 from flask_mail import Mail, Message
 
@@ -28,7 +28,7 @@ def login_registro():
         existe_usuario=obtener_por_email(correo_registro)
         if existe_usuario:
             print('Correo ya existe')
-            flash('El correo electrónico ya está registrado. Inicia sesión si ya tienes una cuenta.')
+            flash('El correo electrónico ya está registrado. Inicia sesión si ya tienes una cuenta.','warning')
             return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items_cart=cart.total_items())
         else:
                     # Si el correo no está registrado, procede con el registro
@@ -44,7 +44,7 @@ def login_registro():
                 print('Se registro')
                 session['email']=nuevo_usuario.email
                 session['tipo_usuario']='public'
-                flash("Te has registrado exitosamente!!!")
+                flash("Te has registrado exitosamente!!!",'success')
                 msg = Message('Gracias por tu registro!',
                           sender=MAIL_USERNAME,
                           recipients=[nuevo_usuario.email])
@@ -55,7 +55,7 @@ def login_registro():
                 return redirect(url_for('inicio.home'))
             else:
                 print('Problema de registro')
-                flash('Hubo un problema durante el registro. Por favor, inténtalo de nuevo.')
+                flash('Hubo un problema durante el registro. Por favor, inténtalo de nuevo.','danger')
                 return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items_cart=cart.total_items())
 
     elif form_login.submit_login.data and form_login.validate_on_submit():
@@ -78,13 +78,12 @@ def login_registro():
                     return redirect(url_for('inicio.home'))
             else:
                 print('Contraseña incorrecta')
-                flash('La contraseña es incorrecta. Intenta nuevamente.')
+                flash('La contraseña es incorrecta. Intenta nuevamente.','warning')
             return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items_cart=cart.total_items())
         else:
             # Si el correo no está registrado
         
-            flash('Hubo un problema, el correo ingresado no está registrado')
-            flash('Si no tienes cuenta debes registrarte')
+            flash('El correo ingresado no está registrado. Si no tienes cuenta debes registrarte','warning')
             return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items_cart=cart.total_items())
 
     else:
@@ -100,3 +99,58 @@ def cerrar_sesion():
     session.pop('tipo_usuario', None)
     return redirect(url_for('inicio.home'))
 
+
+#REESTABLECER CONTRASEÑA
+
+def send_reset_email(user:Usuario):
+    token = user.get_reset_token()
+    msg = Message('Solicitud de Restablecimiento de Contraseña',
+                  sender=MAIL_USERNAME,
+                  recipients=[user.email])
+    msg.body = f'''Para restablecer tu contraseña, visita el siguiente enlace:
+        {url_for('auth.reset_token', token=token, _external=True)}
+        Si no has solicitado esto, simplemente ignora este correo y ninguna acción será tomada.
+    '''
+    mail.send(msg)
+
+@auth_bp.route('/reset_password', methods=['GET', 'POST'])
+def reset_request():
+    if 'email' in session:
+        if session['tipo_usuario']=='admin':
+            return redirect(url_for('admin.panel_control'))
+        return redirect(url_for('inicio.home'))
+    
+    cart = obtener_carrito()
+    if request.method == 'POST':
+        email = request.form.get('email')
+        user = obtener_por_email(email=email)
+        if user:
+            send_reset_email(user)
+            flash('Se ha enviado un correo electrónico con instrucciones para restablecer la contraseña.','success')
+            return redirect(url_for('auth.login_registro'))
+        else:
+            flash('No existe una cuenta con ese correo electrónico. Primero regístrate.', 'warning')
+    return render_template('reset_request.html',total_items_cart=cart.total_items())
+
+@auth_bp.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_token(token):
+    if 'email' in session:
+        if session['tipo_usuario']=='admin':
+            return redirect(url_for('admin.panel_control'))
+        return redirect(url_for('inicio.home'))
+    
+    cart = obtener_carrito()
+    user = Usuario.verify_reset_token(token)
+    if user is None:
+        flash('El token es inválido o ha expirado.', 'warning')
+        return redirect(url_for('auth.reset_request'))
+    if request.method == 'POST':
+        password = request.form.get('password')
+        user.password = password
+        user.reset_token = None
+        if actualizarUsuario(user):    
+            flash('Tu contraseña ha sido actualizada. Ahora puedes iniciar sesión.','success')
+            return redirect(url_for('auth.login_registro'))
+        else:
+            flash('Se produjo un error al reestablecer','danger')
+    return render_template('reset_token.html', token=token, total_items_cart=cart.total_items())

@@ -7,6 +7,7 @@ class RegistroForm(FlaskForm):
     celular = StringField('Celular', validators=[DataRequired("Ingrese un número de celular"), Regexp(r'^\d+$', message='Ingresa un número de celular válido sin letras.')])
     correo = StringField('Correo Electrónico', validators=[DataRequired("Ingrese su correo electrónico"), Email()])
     password = PasswordField('Contraseña', validators=[DataRequired("Digite su contraseña, mínimo 6 caracteres"), Length(min=6, message="Debe tener mínimo 6 caracteres")])
+    password_conf = PasswordField('Confirmar Contraseña', validators=[DataRequired("Digite su contraseña nuevamente"), Length(min=6, message="Debe tener mínimo 6 caracteres")])
     submit_registro = SubmitField('Registrarse')
 
 class LoginForm(FlaskForm):
