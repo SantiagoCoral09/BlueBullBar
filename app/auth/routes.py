@@ -1,13 +1,18 @@
-from flask import render_template, request, redirect, url_for, session, flash
+from flask import current_app, render_template, request, redirect, url_for, session, flash
 from app.auth.forms import LoginForm, RegistroForm
+from app.config.config import Config, MAIL_USERNAME, mail
 from app.models.usuario import Usuario
 from app.services.cart import obtener_carrito
 from app.services.auth_service import verificar_email, verificar_password
 from app.services.usuario_service import agregar_usuario, obtener_por_email
 from . import auth_bp
+from flask_mail import Mail, Message
+
+
 
 @auth_bp.route('/login_registro', methods=["GET", "POST"])
 def login_registro():
+    # print(f'USERNAME: {MAIL_USERNAME}')
     if 'email' in session:
         if session['tipo_usuario']=='admin':
             return redirect(url_for('admin.panel_control'))
@@ -15,6 +20,7 @@ def login_registro():
     cart = obtener_carrito()
     form_registro = RegistroForm(request.form)
     form_login = LoginForm(request.form)
+
 
     if form_registro.submit_registro.data and form_registro.validate_on_submit():
         # Llega el formulario de registro
@@ -39,6 +45,13 @@ def login_registro():
                 session['email']=nuevo_usuario.email
                 session['tipo_usuario']='public'
                 flash("Te has registrado exitosamente!!!")
+                msg = Message('Gracias por tu registro!',
+                          sender=MAIL_USERNAME,
+                          recipients=[nuevo_usuario.email])
+                # print(f"Mensaje... {msg}")
+
+                msg.html = render_template('email.html', username=nuevo_usuario.nombres)
+                mail.send(msg)
                 return redirect(url_for('inicio.home'))
             else:
                 print('Problema de registro')

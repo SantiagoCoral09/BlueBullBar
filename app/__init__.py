@@ -5,10 +5,14 @@ from .cart import cart_bp
 from .compra import compra_bp
 from .error import error_bp
 from .admin import admin_bp
+from .config.config import DevelopmentMode, ProductionMode
+from flask_mail import Mail
 
 app = Flask(__name__)
-app.secret_key='clave_secreta'
-app.config.from_pyfile('config/configuracion.cfg')
+app.config.from_object(DevelopmentMode)
+
+# mail=Mail()
+
 
 app.register_blueprint(inicio_bp)
 app.register_blueprint(auth_bp)
