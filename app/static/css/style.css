@@ -2,7 +2,7 @@
 =========================================================
 * FoodHut Landing page
 =========================================================
-
+* Bootstrap 4.3.1
 * Copyright: 2019 DevCRUD (https://devcrud.com)
 * Licensed: (https://devcrud.com/licenses)
 * Coded by www.devcrud.com
@@ -11407,31 +11407,55 @@ pre {
   opacity: 1;
 }
 
-
+thead{
+  background-color: #001f3f;
+}
+/* Estilos tabla panel de control */
 .custom-container {
   margin: 10px;
   padding: 10px;
 }
 
-.imagen{
-  min-width: 300px;
-}
 
 .id{
-  width: 6%;
+  width: 75px;
 }
 
-.categoria{
-  width: 10%;
+.imagen{
+  width: 185px;
+  min-width: 150px;
+
+}
+
+.nombre{
+  width: 185px;
+  min-width: 120px;
+}
+
+.precio{
+  width: 150px;
+  min-width: 110px;
+
 }
 
 .descripcion{
-  width: 20%;
+  min-width: 215px;
 }
 
-thead{
-  background-color: #001f3f;
+.tipo{
+  width: 200px;
+  min-width: 150px;
+
 }
+
+.acciones_control{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+}
+
+
 
 /* #agregar{
   color: red;

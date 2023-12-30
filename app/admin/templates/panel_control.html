@@ -11,21 +11,21 @@
         <a class="btn btn-primary" id="agregar" href="{{url_for('admin.agregar')}}">+ Agregar nuevo</a>
     </div>
     <br>
-    <div class="pagination">
+    <div class="text-center">
         {{ pagination.info }}
-    </div>
+    </div><hr>
     <div class="d-flex justify-content-center">
         {{ pagination.links }}
 
     </div>
-    <div class="table-responsive">
-        <table class="table table-bordered ">
+    <div class="table-responsive-xl">
+        <table class="table table table-striped table-dark table-bordered table-hover">
             <thead>
                 <tr class="text-center">
                     <th class="id">ID</th>
                     <th class="imagen">Imagen</th>
-                    <th>Nombre</th>
-                    <th class="tipo">Precio</th>
+                    <th class="nombre">Nombre</th>
+                    <th class="precio">Precio</th>
                     <th class="descripcion">Descripción</th>
                     <th class="tipo">Categoría</th>
                     <th>Acciones</th>
@@ -35,7 +35,7 @@
                 {% for item in items_menu %}
                 <tr>
                     <form action="{{url_for('admin.modificar',item_id=item.id)}}" method="post">
-                        <td>{{item.id}}
+                        <td class="text-center">{{item.id}}
                             <div id="carga_imagen{{item.id}}">
                                 {% if item.imagen.startswith('http') %}
                                 <img src="{{ item.imagen }}" alt="template by..." width="50">
@@ -45,25 +45,23 @@
                                 {% endif %}
                             </div>
                         </td>
-                        <td><textarea type="text" class="form-control" name="imagen" id="imagen{{item.id}}"
-                                oninput="cargarImagen();" required>{{item.imagen}}</textarea>
+                        <td><textarea type="text" class="form-control" rows="3" name="imagen" id="imagen{{item.id}}"
+                                oninput="cargarImg({{item.id}});" required>{{item.imagen}}</textarea>
                         </td>
                         <script>
-                            function cargarImagen() {
-                                let url_img = document.getElementById('imagen{{item.id}}').value;
-                                console.log('Se mostrara la imagen');
-                                console.log(url_img);
-                                document.getElementById('carga_imagen{{item.id}}').innerHTML = '<img src="' + url_img + '" alt="..." width="50">'
-                        
+                            function cargarImg(id) {
+                                let url_img = document.getElementById('imagen'+id).value;
+                                document.getElementById('carga_imagen'+id).innerHTML = '<img src="' + url_img + '" alt="..." width="50">';
                             }
                         </script>
 
-                        <td><textarea type="text" class="form-control" name="nombre" required>{{item.nombre}}</textarea>
+                        <td><textarea type="text" rows="3"  class="form-control" name="nombre" required>{{item.nombre}}</textarea>
                         </td>
                         <td><textarea type="number" class="form-control" name="precio"
                                 required>{{item.precio}}</textarea>
                         </td>
-                        <td><textarea class="form-control" name="descripcion" required>{{item.descripcion}}</textarea>
+                        <td><textarea class="form-control" name="descripcion" rows="3"
+                                required>{{item.descripcion}}</textarea>
                         </td>
                         <td>{{item.categoria}}<select class="form-control" id="categoria" name="categoria" required>
                                 <!-- <option value="null">Seleccione una opción</option> -->
@@ -78,32 +76,37 @@
                                 <option value="Bebida" {% if item.categoria=='Bebida' %} selected {% endif %}>Bebidas
                                 </option>
                             </select></td>
-                        <td class="text-center">
-                            <button type="submit" class="btn btn-success btn-sm">Modificar</button>
-                            <a data-toggle="modal" data-target="#modalEliminar{{item.id}}"
-                                class="btn btn-danger btn-sm mt-1">Eliminar</a>
+                        <td>
+                            <div  class="acciones_control">
+                                <button type="submit" class="btn btn-success btn-sm mr-2">Modificar</button>
+                                <button class="btn btn-danger btn-sm" style="color: #fff;"><a data-toggle="modal" data-target="#modalEliminar{{item.id}}"
+                                    >Eliminar</a></button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="modalEliminar{{item.id}}" tabindex="-1" role="dialog"
-                                aria-labelledby="modalEliminar{{item.id}}Title" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content" style="color: black;">
-                                        <div class="modal-header bg-danger">
-                                            <h5 class="modal-title" id="modalEliminar{{item.id}}Title">¿Seguro quieres
-                                                eliminar el item {{item.id}}: {{item.nombre}}?</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Cancelar</button>
-                                            <a href=" {{url_for('admin.eliminar',item_id=item.id)}}"
-                                                class="btn btn-primary">Confirmar</a>
+                                <!-- Modal -->
+                                <div class="modal fade" id="modalEliminar{{item.id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="modalEliminar{{item.id}}Title" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content" style="color: black;">
+                                            <div class="modal-header bg-danger">
+                                                <h5 class="modal-title" id="modalEliminar{{item.id}}Title">¿Seguro
+                                                    quieres
+                                                    eliminar el item {{item.id}}: {{item.nombre}}?</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Cancelar</button>
+                                                <a href=" {{url_for('admin.eliminar',item_id=item.id)}}"
+                                                    class="btn btn-primary">Confirmar</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </td>
                     </form>
                 </tr>

@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, url_for
+from flask import Flask
 from .inicio import inicio_bp
 from .auth import auth_bp
 from .cart import cart_bp
@@ -6,12 +6,11 @@ from .compra import compra_bp
 from .error import error_bp
 from .admin import admin_bp
 from .config.config import DevelopmentMode, ProductionMode
-from flask_mail import Mail
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentMode)
-
-# mail=Mail()
+# Cuando se vaya a desplegar se pasa a ProductionMode
+# app.config.from_object(ProductionMode)
 
 
 app.register_blueprint(inicio_bp)
