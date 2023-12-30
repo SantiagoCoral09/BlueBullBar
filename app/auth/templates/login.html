@@ -1,13 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Blue Bull Bar - Login/Registro{% endblock %}
+{% block title %}Blue Bull Bar - Login/Register{% endblock %}
 {% block content %}
 
 <!-- header -->
 <header id="home" class="header">
     <div class="overlay text-white text-center"><br><br>
         <h1 class="display-2 font-weight-bold my-3">Blue Bull Bar</h1>
-        <h2 class="display-4 mb-5">Always fresh &amp; Delightful</h2>
-        <a class="btn btn-lg btn-primary">Accede a tu cuenta o regístrate</a>
+        <h2 class="display-4 mb-5">{{_('Always fresh &amp; Delightful')}}</h2>
+        <a class="btn btn-lg btn-primary">{{_('Access your account or register')}}</a>
         <hr>
         <!-- Mostrar mendajes flash -->
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -31,14 +31,14 @@
             <div class="container pb-5 pt-5" style="background-color: rgba(255, 255, 255, 0.05);">
                 <div style="margin: 10px 10%; ">
 
-                    <h2 class="mb-4">Regístrate</h2>
+                    <h2 class="mb-4">{{_('Sign up')}}</h2>
 
 
                     <form method="post" action="{{ url_for('auth.login_registro') }}" novalidate autocomplete="off">
-                        {{ form_registro.csrf_token }}
+                        {{ form_registro.csrf_token1 }}
 
                         <div class="form-group">
-                            {{ form_registro.nombre.label }} {{ form_registro.nombre(class="form-control") }}
+                            <label for="nombre">{{_('Name')}} {{ form_registro.nombre(class="form-control",size=35) }}
                             <div>
                                 {% if form_registro.nombre.errors %}
                                 <div class="alert alert-danger">{{ form_registro.nombre.errors }}</div>
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            {{ form_registro.celular.label }} {{ form_registro.celular(class="form-control") }}
+                            <label for="celular">{{_('Phone')}} {{ form_registro.celular(class="form-control",size=35) }}
                             <div>
                                 {% if form_registro.celular.errors %}
                                 <div class="alert alert-danger">{{ form_registro.celular.errors }}</div>
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            {{ form_registro.correo.label }} {{ form_registro.correo(class="form-control") }}
+                            <label for="correo">{{_('Email')}} {{ form_registro.correo(class="form-control",size=35) }}
                             <div>
                                 {% if form_registro.correo.errors %}
                                 <div class="alert alert-danger">{{ form_registro.correo.errors }}</div>
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            {{ form_registro.password.label }} {{ form_registro.password(class="form-control",oninput="validarContraseñas();") }}
+                            <label for="password">{{_('Password')}} {{ form_registro.password(class="form-control",oninput="validarContraseñas();",size=35) }}
                             <div>
                                 {% if form_registro.password.errors %}
                                 <div class="alert alert-danger">{{ form_registro.password.errors }}</div>
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            {{ form_registro.password_conf.label }} {{ form_registro.password_conf(class="form-control",oninput="validarContraseñas();") }}
+                            <label for="password_conf">{{_('Confirm password')}} {{ form_registro.password_conf(class="form-control",oninput="validarContraseñas();",size=35) }}
                             <div>
                                 {% if form_registro.password_conf.errors %}
                                 <div class="alert alert-danger">{{ form_registro.password_conf.errors }}</div>
@@ -80,7 +80,7 @@
                         <br>
                         <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" id="mostrar_contraseña_r" onchange="mostrarOcultarContraseñas()">
-                            <label class="form-check-label" for="mostrar_contraseña_r" >Mostrar Contraseñas</label>
+                            <label class="form-check-label" for="mostrar_contraseña_r" >{{_('Show passwords')}}</label>
                         </div>
                         <div class="text-danger" id="error-message" style="display: none;"></div>
                         <br>
@@ -101,7 +101,7 @@
                 let password2 = document.getElementById("password_conf").value;
                 if (password1 != password2) {
                     document.getElementById("error-message").style.display = 'block';
-                    document.getElementById("error-message").innerHTML = "Las contraseñas no coinciden.";
+                    document.getElementById("error-message").innerHTML = "{{_('Passwords do not match.')}}";
                     document.getElementById("submit_registro").disabled = true;
                 } else {
                     document.getElementById("error-message").style.display = 'none';
@@ -127,13 +127,13 @@
             <div class="container pb-5 pt-5" style="background-color: rgba(255, 255, 255, 0.05);">
                 <div style="margin: 10px 10%; ">
                     <div style="margin: 10px 10%;">
-                        <h2 class="mb-4">Iniciar Sesión</h2>
+                        <h2 class="mb-4">{{_('Sign in')}}</h2>
                         <form action="{{ url_for('auth.login_registro') }}" method="post" autocomplete="off" novalidate
                             autocomplete="off">
                             {{ form_login.csrf_token }}
 
                             <div class="form-group">
-                                {{ form_login.email.label }} {{ form_login.email(class="form-control") }}
+                                <label for="email">{{_('Email')}}</label> {{ form_login.email(class="form-control",size=35) }}
                                 <div>
                                     {% if form_login.email.errors %}
                                     <div class="alert alert-danger">{{ form_login.email.errors }}</div>
@@ -141,7 +141,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                {{ form_login.password_l.label }} {{ form_login.password_l(class="form-control") }}
+                                <label for="password_l">{{_('Password')}} {{ form_login.password_l(class="form-control",size=35) }}
                                 <div>
                                     {% if form_login.password_l.errors %}
                                     <div class="alert alert-danger">{{ form_login.password_l.errors }}</div>
@@ -154,10 +154,10 @@
                         <br>
                         <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" id="mostrar_contraseña_l" onchange="mostrarOcultarContraseña()">
-                            <label class="form-check-label" for="mostrar_contraseña_l" >Mostrar Contraseña</label>
+                            <label class="form-check-label" for="mostrar_contraseña_l" >{{_('Show password')}}</label>
                             
                         </div><hr>
-                        <a href="{{ url_for('auth.reset_request') }}" class="btn btn-link" style="color: cornflowerblue;">¿Olvidaste tu contraseña?</a>
+                        <a href="{{ url_for('auth.reset_request') }}" class="btn btn-link" style="color: cornflowerblue;">{{_('Did you forget your password?')}}</a>
 
                     </div>
                 </div>

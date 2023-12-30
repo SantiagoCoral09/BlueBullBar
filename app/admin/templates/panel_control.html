@@ -1,14 +1,14 @@
 {% extends "base_admin.html"%}
-{% block title %}Administrador - Menu{% endblock %}
+{% block title %}Admin - Menu{% endblock %}
 {% block content %}
 
 <div id="admin" class="container-fluid wow fadeIn">
-    <h2 class="text-center mt-3">Gestión de Productos en Inventario. <span class="text-right">Total:
+    <h2 class="text-center mt-3">{{_('Product Inventory Management.')}} <span class="text-right">Total:
             {{total}}</span> </h2><br>
     <div class="text-right">
         <!-- <h4>Total: {{total}}</h4> -->
 
-        <a class="btn btn-primary" id="agregar" href="{{url_for('admin.agregar')}}">+ Agregar nuevo</a>
+        <a class="btn btn-primary" id="agregar" href="{{url_for('admin.agregar')}}">+ {{_('Add new')}}</a>
     </div>
     <br>
     <div class="text-center">
@@ -23,12 +23,12 @@
             <thead>
                 <tr class="text-center">
                     <th class="id">ID</th>
-                    <th class="imagen">Imagen</th>
-                    <th class="nombre">Nombre</th>
-                    <th class="precio">Precio</th>
-                    <th class="descripcion">Descripción</th>
-                    <th class="tipo">Categoría</th>
-                    <th>Acciones</th>
+                    <th class="imagen">{{_("Image")}}</th>
+                    <th class="nombre">{{_("Name")}}</th>
+                    <th class="precio">{{_("Price")}}</th>
+                    <th class="descripcion">{{_("Description")}}</th>
+                    <th class="tipo">{{_("Category")}}</th>
+                    <th>{{_("Actions")}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,22 +65,21 @@
                         </td>
                         <td>{{item.categoria}}<select class="form-control" id="categoria" name="categoria" required>
                                 <!-- <option value="null">Seleccione una opción</option> -->
-                                <option value="Entrada" {% if item.categoria=='Entrada' %} selected {% endif %}>Platos
-                                    de Entrada</option>
+                                <option value="Entrada" {% if item.categoria=='Entrada' %} selected {% endif %}>{{_("Entries")}}</option>
                                 <option value="Principal" {% if item.categoria=='Principal' %} selected {% endif %}>
-                                    Platos principales</option>
+                                    {{_("Main Courses")}}</option>
                                 <option value="Compartir" {% if item.categoria=='Compartir' %} selected {% endif %}>
-                                    Platos para compartir</option>
-                                <option value="Postre" {% if item.categoria=='Postre' %} selected {% endif %}>Postres
+                                    {{_("Dishes to share")}}</option>
+                                <option value="Postre" {% if item.categoria=='Postre' %} selected {% endif %}>{{_("Desserts")}}
                                 </option>
-                                <option value="Bebida" {% if item.categoria=='Bebida' %} selected {% endif %}>Bebidas
+                                <option value="Bebida" {% if item.categoria=='Bebida' %} selected {% endif %}>{{_("Drinks")}}
                                 </option>
                             </select></td>
                         <td>
                             <div  class="acciones_control">
-                                <button type="submit" class="btn btn-success btn-sm mr-2">Modificar</button>
+                                <button type="submit" class="btn btn-success btn-sm mr-2">{{_("Update")}}</button>
                                 <button class="btn btn-danger btn-sm" style="color: #fff;"><a data-toggle="modal" data-target="#modalEliminar{{item.id}}"
-                                    >Eliminar</a></button>
+                                    >{{_("Delete")}}</a></button>
 
                                 <!-- Modal -->
                                 <div class="modal fade" id="modalEliminar{{item.id}}" tabindex="-1" role="dialog"
@@ -88,9 +87,7 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content" style="color: black;">
                                             <div class="modal-header bg-danger">
-                                                <h5 class="modal-title" id="modalEliminar{{item.id}}Title">¿Seguro
-                                                    quieres
-                                                    eliminar el item {{item.id}}: {{item.nombre}}?</h5>
+                                                <h5 class="modal-title" id="modalEliminar{{item.id}}Title">{{_("Are you sure you want to delete the item")}} '{{item.id}}: {{item.nombre}}'?</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -98,9 +95,9 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Cancelar</button>
+                                                    data-dismiss="modal">{{_("Cancel")}}</button>
                                                 <a href=" {{url_for('admin.eliminar',item_id=item.id)}}"
-                                                    class="btn btn-primary">Confirmar</a>
+                                                    class="btn btn-primary">{{_("Confirm")}}</a>
                                             </div>
                                         </div>
                                     </div>

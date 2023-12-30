@@ -58,7 +58,7 @@ def obtener_por_id(id):
     conn.close()
     return usuario
 
-def agregar_usuario(usuario):
+def agregar_usuario(usuario:Usuario):
     try:
         db_path = current_app.config['DATABASE_URI'].replace('sqlite:///', '')
         conn = sqlite3.connect(db_path)

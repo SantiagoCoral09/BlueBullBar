@@ -1,12 +1,12 @@
 {% extends "base.html"%}
-{% block title %}Blue Bull Bar - Home{% endblock %}
+{% block title %}Blue Bull Bar - {{_('Home')}}{% endblock %}
 {% block content %}
 
 <!-- header -->
 <header id="home" class="header">
     <div class="overlay text-white text-center"><br><br>
         <h1 class="display-2 font-weight-bold  mt-5">Blue Bull Bar</h1>
-        <h2 class="display-4 mb-2">Always fresh &amp; Delightful</h2>
+        <h2 class="display-4 mb-2">{{_('Always fresh &amp; Delightfull')}}</h2>
 
         <!-- Mostrar mendajes flash -->
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -20,7 +20,7 @@
         </ul>
         {% endif %}
         {% endwith %}
-        <a class="btn btn-lg btn-primary" href="#menu">Mira nuestro Menú</a>
+        <a class="btn btn-lg btn-primary" href="#menu">{{_('See our Menu')}}</a>
     </div>
 
 </header>
@@ -31,37 +31,35 @@
             <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
                 <li class="nav-item"
                     style="font-size: 15pt; color: #fff; border: solid 0.1px rgba(0,0,0,0.1); background-color: #08032033; ">
-                    <a class="nav-link {% if categoria == 'Platos de Entrada' %}active{% endif %}"
-                        href="{{url_for('inicio.platos_por_categoria', categoria='Entrada')}}">Platos de Entrada</a>
+                    <a class="nav-link {% if num_cat == 1 %}active{% endif %}"
+                        href="{{url_for('inicio.platos_por_categoria', categoria='Entrada')}}">{{_('Entries')}}</a>
                 </li>
                 <li class="nav-item"
                     style="font-size: 15pt; color: #fff; border: solid 0.1px rgba(0,0,0,0.1); background-color: #08032033; ">
-                    <a class="nav-link {% if categoria == 'Platos Principales' %}active{% endif %}"
-                        href="{{url_for('inicio.platos_por_categoria', categoria='Principal')}}">Platos
-                        principales</a>
+                    <a class="nav-link {% if num_cat == 2 %}active{% endif %}"
+                        href="{{url_for('inicio.platos_por_categoria', categoria='Principal')}}">{{_('Main courses')}}</a>
                 </li>
                 <li class="nav-item"
                     style="font-size: 15pt; color: #fff; border: solid 0.1px rgba(0,0,0,0.1); background-color: #08032033; ">
-                    <a class="nav-link {% if categoria == 'Platos para Compartir' %}active{% endif %}"
-                        href="{{url_for('inicio.platos_por_categoria', categoria='Compartir')}}">Platos para
-                        compartir</a>
+                    <a class="nav-link {% if num_cat == 3 %}active{% endif %}"
+                        href="{{url_for('inicio.platos_por_categoria', categoria='Compartir')}}">{{_('Dishes to share')}}</a>
                 </li>
                 <li class="nav-item"
                     style="font-size: 15pt; color: #fff; border: solid 0.1px rgba(0,0,0,0.1); background-color: #08032033; ">
-                    <a class="nav-link {% if categoria == 'Postres' %}active{% endif %}"
-                        href="{{url_for('inicio.platos_por_categoria', categoria='Postre')}}">Postres</a>
+                    <a class="nav-link {% if num_cat == 4 %}active{% endif %}"
+                        href="{{url_for('inicio.platos_por_categoria', categoria='Postre')}}">{{_('Desserts')}}</a>
                 </li>
                 <li class="nav-item"
                     style="font-size: 15pt; color: #fff; border: solid 0.1px rgba(0,0,0,0.1); background-color: #08032033; ">
-                    <a class="nav-link {% if categoria == 'Bebidas' %}active{% endif %}"
-                        href="{{url_for('inicio.platos_por_categoria', categoria='Bebida')}}">Bebidas</a>
+                    <a class="nav-link {% if num_cat == 5 %}active{% endif %}"
+                        href="{{url_for('inicio.platos_por_categoria', categoria='Bebida')}}">{{_('Drinks')}}</a>
                 </li>
             </ul>
         </div>
     </div>
     <div class="tab-content" id="pills-tabContent">
-        <h2 class="section-title py-2">Nuestro Menú - {{categoria}}</h2>
-        <p style="font-size: 15pt;">Elige una imagen para más detalles</p>
+        <h2 class="section-title py-2">{{_('Our Menu')}} - {{categoria}}</h2>
+        <p style="font-size: 15pt;">{{_('Choose an image for more details')}}</p>
         <br>
         
         <div class="d-flex justify-content-center">
@@ -116,7 +114,7 @@
 
 <!-- REVIEWS Section  -->
 <div id="testmonial" class="container-fluid wow fadeIn bg-dark text-light has-height-lg middle-items">
-    <h2 class="section-title my-5 text-center">REVIEWS</h2>
+    <h2 class="section-title my-5 text-center">{{_('REVIEWS')}}</h2>
     <div class="row mt-3 mb-5">
         <div class="col-md-4 my-3 my-md-0">
             <div class="testmonial-card">

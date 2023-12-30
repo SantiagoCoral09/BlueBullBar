@@ -1,13 +1,13 @@
 {% extends "base.html"%}
-{% block title %}Blue Bull Bar - Comprar{% endblock %}
+{% block title %}Blue Bull Bar - {{_('Buy')}}{% endblock %}
 {% block content %}
 
 <!-- header -->
 <header id="home" class="header">
     <div class="overlay text-white text-center"><br><br>
         <h1 class="display-2 font-weight-bold pt-5 my-3">Blue Bull Bar</h1>
-        <h2 class="display-4 mb-5">Always fresh &amp; Delightful</h2>
-        <a class="btn btn-lg btn-primary" href="#comprar">Información para tu compra</a>
+        <h2 class="display-4 mb-5">{{_('Always fresh &amp; Delightful')}}</h2>
+        <a class="btn btn-lg btn-primary" href="#comprar">{{_('Information for your purchase')}}</a>
     </div>
     <!-- Mostrar mendajes flash -->
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -28,18 +28,18 @@
         <div class="col-lg-6 mb-5 mt-3 text-center">
             <div style="margin: 10px 10%;">
 
-                <h2 class="mb-4">Tu menú a comprar</h2>
+                <h2 class="mb-4">{{_('Your menu to buy')}}</h2>
 
                 <div>
                     <!-- Itera sobre los elementos del carrito -->
                     {% for item_cart in carrito %}
                     <div>
-                        <p>Nombre: {{ item_cart.nombre }} - Cantidad: {{ item_cart.cantidad }} <br> Precio: ${{
+                        <p>{{_('Name')}}: {{ item_cart.nombre }} - {{_('Quantity')}}: {{ item_cart.cantidad }} <br> {{_('Price')}}: ${{
                             item_cart.precio }}</p>
                         <hr>
                     </div>
                     {% endfor %}
-                    <p>Total a pagar: $ {{total}}</p>
+                    <p>{{_('Total to pay')}}: $ {{total}}</p>
                 </div>
 
             </div>
@@ -51,13 +51,13 @@
         <!-- Columna de Inicio de Sesión -->
         <div class="col-lg-6 mb-5 mt-3 text-center">
             <div style="margin: 10px 10%;">
-                <h2 class="mb-4">Importante!!</h2>
+                <h2 class="mb-4">{{_('Important!!')}}</h2>
                 <form action="{{ url_for('compra.realizar_compra') }}" method="post" autocomplete="off" novalidate
                     autocomplete="off">
                     {{ form.csrf_token }}
 
-                    <div class="form-group">
-                        {{ form.metodo_pago.label }} {{ form.metodo_pago(class="form-control") }}
+                    <div class="form-group text-center">
+                        <label for="metodo_pago">{{_('Payment Method')}}</label> {{ form.metodo_pago(class="form-control") }}
                         <div>
                             {% if form.metodo_pago.errors %}
                             <div class="alert alert-danger">{{ form.metodo_pago.errors }}</div>
@@ -66,7 +66,9 @@
                     </div>
 
                     <div class="justify-content-center">
-                        {{form.submit_compra(class="btn btn-primary")}}</div>
+                        <button type="submit" class="btn btn-primary">{{_("Complete purchase")}}</button>
+                        <!-- {{form.submit_compra(class="btn btn-primary")}} -->
+                    </div>
                 </form>
             </div>
         </div>

@@ -1,0 +1,610 @@
+# Spanish translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2023-12-30 15:44-0500\n"
+"PO-Revision-Date: 2023-12-30 15:45-0500\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.1\n"
+
+#: app/admin/form.py:7 app/admin/templates/panel_control.html:27
+#: app/auth/forms.py:7 app/cart/templates/carrito.html:153
+#: app/compra/templates/realizar_compra.html:37
+msgid "Name"
+msgstr "Nombre"
+
+#: app/admin/form.py:7
+msgid "You must enter the product name"
+msgstr "Debes ingresar el nombre del producto"
+
+#: app/admin/form.py:8 app/admin/templates/panel_control.html:29
+msgid "Description"
+msgstr "Descripción"
+
+#: app/admin/form.py:8
+msgid "Enter a description"
+msgstr "Ingresa una descripción"
+
+#: app/admin/form.py:9 app/admin/templates/panel_control.html:28
+#: app/cart/templates/carrito.html:153
+#: app/compra/templates/realizar_compra.html:37
+msgid "Price"
+msgstr "Precio"
+
+#: app/admin/form.py:9
+msgid "Enter a price"
+msgstr "Ingresa un precio"
+
+#: app/admin/form.py:10
+msgid "Select a category"
+msgstr "Selecciona una categoría"
+
+#: app/admin/form.py:10
+msgid "Entrie"
+msgstr "Entrada"
+
+#: app/admin/form.py:10
+msgid "Main course"
+msgstr "Plato principal"
+
+#: app/admin/form.py:10
+msgid "Dish to share"
+msgstr "Plato para compartir"
+
+#: app/admin/form.py:10
+msgid "Dessert"
+msgstr "Postre"
+
+#: app/admin/form.py:10
+msgid "Drink"
+msgstr "Bebida"
+
+#: app/admin/form.py:11
+msgid "Enter the URL of the Image"
+msgstr "Ingresa la URL de la imagen"
+
+#: app/admin/form.py:12
+msgid "Save"
+msgstr "Guardar"
+
+#: app/admin/routes.py:24 app/inicio/routes.py:23 app/inicio/routes.py:44
+msgid "Showing {start} - {end} of {total} total records"
+msgstr "Mostrando {start} - {end} de {total} registros en total"
+
+#: app/admin/routes.py:46
+msgid "Saved successfully"
+msgstr "Guardado exitosamente"
+
+#: app/admin/routes.py:50 app/admin/routes.py:87
+msgid "Error saving item"
+msgstr "Error al guardar el elemento"
+
+#: app/admin/routes.py:53 app/admin/routes.py:90
+msgid "Unknown error"
+msgstr "Error desconocido"
+
+#: app/admin/routes.py:55
+msgid "Incorrect data"
+msgstr "Datos incorrectos"
+
+#: app/admin/routes.py:83
+msgid "Saved successfully!!"
+msgstr "¡¡Guardado exitosamente!!"
+
+#: app/admin/routes.py:109
+msgid "Successful removal"
+msgstr "Eliminación exitosa"
+
+#: app/admin/routes.py:111
+msgid "Could not delete item"
+msgstr "No se pudo eliminar el elemento"
+
+#: app/admin/templates/agregar_producto.html:2
+msgid "Add Menu"
+msgstr "Agregar Menú"
+
+#: app/admin/templates/agregar_producto.html:8
+msgid "Registration of Products in Inventory"
+msgstr "Registro de productos en inventario"
+
+#: app/admin/templates/agregar_producto.html:10
+msgid "List inventory"
+msgstr "Listar inventario"
+
+#: app/admin/templates/base_admin.html:35 app/templates/base.html:34
+msgid "WELCOME"
+msgstr "BIENVENIDO"
+
+#: app/admin/templates/base_admin.html:80 app/templates/base.html:96
+msgid "Logout"
+msgstr "Cerrar sesión"
+
+#: app/admin/templates/base_admin.html:82
+msgid "Login/Account"
+msgstr "Login/Cuenta"
+
+#: app/admin/templates/base_admin.html:100 app/auth/templates/login.html:9
+#: app/cart/templates/carrito.html:9
+#: app/compra/templates/realizar_compra.html:9
+msgid "Always fresh &amp; Delightful"
+msgstr "Siempre fresco y encantador"
+
+#: app/admin/templates/base_admin.html:101
+msgid "Manage products"
+msgstr "Administrar productos"
+
+#: app/admin/templates/base_admin.html:127 app/templates/base.html:156
+msgid "EMAIL"
+msgstr "CORREO ELECTRÓNICO"
+
+#: app/admin/templates/base_admin.html:131 app/templates/base.html:160
+msgid "CALL US"
+msgstr "LLÁMENOS"
+
+#: app/admin/templates/base_admin.html:135 app/templates/base.html:129
+#: app/templates/base.html:164
+msgid "FIND US"
+msgstr "ENCUÉNTRANOS"
+
+#: app/admin/templates/base_admin.html:157 app/templates/base.html:186
+msgid "Are you sure you want to log out?"
+msgstr "¿Estás seguro de que quieres cerrar sesión?"
+
+#: app/admin/templates/base_admin.html:163
+#: app/admin/templates/panel_control.html:98 app/templates/base.html:192
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: app/admin/templates/base_admin.html:164
+#: app/admin/templates/panel_control.html:100 app/templates/base.html:193
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: app/admin/templates/panel_control.html:6
+msgid "Product Inventory Management."
+msgstr "Gestión de inventario de productos."
+
+#: app/admin/templates/panel_control.html:11
+msgid "Add new"
+msgstr "Agregar nuevo"
+
+#: app/admin/templates/panel_control.html:26
+msgid "Image"
+msgstr "Imagen"
+
+#: app/admin/templates/panel_control.html:30
+msgid "Category"
+msgstr "Categoría"
+
+#: app/admin/templates/panel_control.html:31
+msgid "Actions"
+msgstr "Acciones"
+
+#: app/admin/templates/panel_control.html:68 app/inicio/routes.py:31
+#: app/inicio/routes.py:48 app/inicio/templates/inicio.html:35
+#: app/templates/base.html:53
+msgid "Entries"
+msgstr "Entradas"
+
+#: app/admin/templates/panel_control.html:70 app/inicio/routes.py:51
+msgid "Main Courses"
+msgstr "Platos principales"
+
+#: app/admin/templates/panel_control.html:72
+#: app/inicio/templates/inicio.html:45 app/templates/base.html:57
+msgid "Dishes to share"
+msgstr "Platos para compartir"
+
+#: app/admin/templates/panel_control.html:73 app/inicio/routes.py:57
+#: app/inicio/templates/inicio.html:50 app/templates/base.html:59
+msgid "Desserts"
+msgstr "Postres"
+
+#: app/admin/templates/panel_control.html:75 app/inicio/routes.py:60
+#: app/inicio/templates/inicio.html:55 app/templates/base.html:61
+msgid "Drinks"
+msgstr "Bebidas"
+
+#: app/admin/templates/panel_control.html:80
+msgid "Update"
+msgstr "Actualizar"
+
+#: app/admin/templates/panel_control.html:82
+msgid "Delete"
+msgstr "Eliminar"
+
+#: app/admin/templates/panel_control.html:90
+msgid "Are you sure you want to delete the item"
+msgstr "¿Estás seguro de que quieres eliminar el elemento"
+
+#: app/auth/forms.py:7
+msgid "You must enter a correct name"
+msgstr "Debes ingresar un nombre correcto"
+
+#: app/auth/forms.py:7
+msgid "Enter a valid name without numbers."
+msgstr "Ingresa un nombre válido sin números."
+
+#: app/auth/forms.py:8
+msgid "Phone"
+msgstr "Teléfono"
+
+#: app/auth/forms.py:8
+msgid "Enter a cell phone number"
+msgstr "Ingresa un número de teléfono celular"
+
+#: app/auth/forms.py:8
+msgid "Enter a valid cell phone number without letters."
+msgstr "Ingresa un número de teléfono celular válido sin letras."
+
+#: app/auth/forms.py:9 app/auth/forms.py:15
+#: app/auth/templates/reset_request.html:36
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: app/auth/forms.py:9 app/auth/templates/reset_request.html:20
+msgid "Enter your e-mail"
+msgstr "Ingresa tu correo electrónico"
+
+#: app/auth/forms.py:10 app/auth/forms.py:16
+msgid "Password"
+msgstr "Contraseña"
+
+#: app/auth/forms.py:10 app/auth/forms.py:16
+msgid "Enter your password, minimum 6 characters"
+msgstr "Ingresa tu contraseña, mínimo 6 caracteres"
+
+#: app/auth/forms.py:10 app/auth/forms.py:11 app/auth/forms.py:16
+msgid "Must be at least 6 characters"
+msgstr "Debe tener al menos 6 caracteres"
+
+#: app/auth/forms.py:11 app/auth/templates/reset_token.html:37
+msgid "Confirm Password"
+msgstr "Confirmar contraseña"
+
+#: app/auth/forms.py:11
+msgid "Enter your password again"
+msgstr "Ingresa tu contraseña nuevamente"
+
+#: app/auth/forms.py:12
+msgid "Sign up now"
+msgstr "Regístrate ahora"
+
+#: app/auth/forms.py:15
+msgid "Enter the email you have registered"
+msgstr "Ingresa el correo electrónico que has registrado"
+
+#: app/auth/forms.py:17 app/auth/templates/login.html:130
+msgid "Sign in"
+msgstr "Iniciar sesión"
+
+#: app/auth/routes.py:31
+msgid "The email is already registered. Sign in if you already have an account."
+msgstr ""
+"El correo electrónico ya está registrado. Inicia sesión si ya tienes una "
+"cuenta."
+
+#: app/auth/routes.py:47
+msgid "You have successfully registered!!!"
+msgstr "¡Te has registrado exitosamente!"
+
+#: app/auth/routes.py:48
+msgid "Thanks for your register!"
+msgstr "¡Gracias por registrarte!"
+
+#: app/auth/routes.py:58
+msgid "There was a problem during registration. Please try again."
+msgstr "Hubo un problema durante el registro. Por favor, inténtalo de nuevo."
+
+#: app/auth/routes.py:71
+msgid "Successful login"
+msgstr "Inicio de sesión exitoso"
+
+#: app/auth/routes.py:81
+msgid "Password is incorrect. Try again."
+msgstr "La contraseña es incorrecta. Inténtalo de nuevo."
+
+#: app/auth/routes.py:86
+msgid ""
+"The email entered is not registered. If you do not have an account you "
+"must register"
+msgstr ""
+"El correo electrónico ingresado no está registrado. Si no tienes una "
+"cuenta, debes registrarte"
+
+#: app/auth/routes.py:107 app/auth/templates/reset_request.html:2
+msgid "Password Reset Request"
+msgstr "Solicitud de restablecimiento de contraseña"
+
+#: app/auth/routes.py:129
+msgid "An email has been sent with instructions to reset your password."
+msgstr ""
+"Se ha enviado un correo electrónico con instrucciones para restablecer tu"
+" contraseña."
+
+#: app/auth/routes.py:132
+msgid "There is no account with that email. Sign up first."
+msgstr "No hay ninguna cuenta con ese correo electrónico. Regístrate primero."
+
+#: app/auth/routes.py:145
+msgid "The token is invalid or has expired."
+msgstr "El token no es válido o ha caducado."
+
+#: app/auth/routes.py:152
+msgid "Your password has been updated. Now you can log in."
+msgstr "Tu contraseña se ha actualizado. Ahora puedes iniciar sesión."
+
+#: app/auth/routes.py:155
+msgid "An error occurred while resetting"
+msgstr "Ocurrió un error al restablecer la contraseña"
+
+#: app/auth/templates/login.html:10
+msgid "Access your account or register"
+msgstr "Accede a tu cuenta o regístrate"
+
+#: app/auth/templates/login.html:34
+msgid "Sign up"
+msgstr "Regístrate"
+
+#: app/auth/templates/login.html:83
+msgid "Show passwords"
+msgstr "Mostrar contraseñas"
+
+#: app/auth/templates/login.html:104
+msgid "Passwords do not match."
+msgstr "Las contraseñas no coinciden."
+
+#: app/auth/templates/login.html:157 app/auth/templates/reset_token.html:47
+msgid "Show password"
+msgstr "Mostrar contraseña"
+
+#: app/auth/templates/login.html:160
+msgid "Did you forget your password?"
+msgstr "¿Olvidaste tu contraseña?"
+
+#: app/auth/templates/reset_request.html:39
+msgid "Send Restore Email"
+msgstr "Enviar correo electrónico de restablecimiento"
+
+#: app/auth/templates/reset_token.html:2 app/auth/templates/reset_token.html:51
+msgid "Restore password"
+msgstr "Restablecer contraseña"
+
+#: app/auth/templates/reset_token.html:11
+msgid "Enter your new password"
+msgstr "Ingresa tu nueva contraseña"
+
+#: app/auth/templates/reset_token.html:31
+msgid "New Password (Must be 6 or more characters)"
+msgstr "Nueva contraseña (debe tener 6 o más caracteres)"
+
+#: app/cart/routes.py:28
+msgid "Added to cart"
+msgstr "Se agregó al carrito"
+
+#: app/cart/routes.py:32
+msgid "Choose a correct quantity"
+msgstr "Elige una cantidad correcta"
+
+#: app/cart/routes.py:35
+msgid "Internal error"
+msgstr "Error interno"
+
+#: app/cart/routes.py:68
+msgid "Updated quantity of"
+msgstr "Se actualizó la cantidad para"
+
+#: app/cart/routes.py:65
+msgid "Removed from cart: '{name}'"
+msgstr "Se eliminó del carrito: '{name}'"
+
+#: app/cart/templates/carrito.html:2
+msgid "Cart"
+msgstr "Carrito"
+
+#: app/cart/templates/carrito.html:10
+msgid "Manage your cart"
+msgstr "Administra tu carrito"
+
+#: app/cart/templates/carrito.html:40
+#: app/compra/templates/realizar_compra.html:42
+msgid "Total to pay"
+msgstr "Total a pagar"
+
+#: app/cart/templates/carrito.html:65
+msgid "Price x Quantity"
+msgstr "Precio x Cantidad"
+
+#: app/cart/templates/carrito.html:72
+msgid "New Quantity"
+msgstr "Nueva Cantidad"
+
+#: app/cart/templates/carrito.html:87
+msgid "Update Quantity"
+msgstr "Actualizar Cantidad"
+
+#: app/cart/templates/carrito.html:91
+msgid "Delete from cart"
+msgstr "Eliminar del carrito"
+
+#: app/cart/templates/carrito.html:136 app/cart/templates/carrito.html:170
+msgid "Proceed to Buy"
+msgstr "Continuar con la Compra"
+
+#: app/cart/templates/carrito.html:144
+msgid "Menu in your cart"
+msgstr "Menú en tu carrito"
+
+#: app/cart/templates/carrito.html:153
+#: app/compra/templates/realizar_compra.html:37
+msgid "Quantity"
+msgstr "Cantidad"
+
+#: app/cart/templates/carrito.html:160 app/cart/templates/carrito.html:190
+msgid "Close"
+msgstr "Cerrar"
+
+#: app/cart/templates/carrito.html:161
+msgid "Complete Purchase"
+msgstr "Completar Compra"
+
+#: app/cart/templates/carrito.html:178
+msgid "You are not logged in"
+msgstr "No has iniciado sesión"
+
+#: app/cart/templates/carrito.html:185
+msgid "To make your purchase, you must Register and Log in"
+msgstr "Para realizar tu compra, debes registrarte e iniciar sesión"
+
+#: app/cart/templates/carrito.html:191
+msgid "Go to login"
+msgstr "Ir a iniciar sesión"
+
+#: app/compra/forms.py:6
+msgid "Payment method"
+msgstr "Método de pago"
+
+#: app/compra/forms.py:6
+msgid "Cash"
+msgstr "Efectivo"
+
+#: app/compra/forms.py:8
+msgid "Card"
+msgstr "Tarjeta"
+
+#: app/compra/routes.py:55
+msgid "The purchase has been made successfully!"
+msgstr "¡La compra se realizó con éxito!"
+
+#: app/compra/routes.py:59
+msgid "Error saving purchase"
+msgstr "Error al guardar la compra"
+
+#: app/compra/routes.py:63
+msgid "Form validation error"
+msgstr "Error de validación del formulario"
+
+#: app/compra/templates/realizar_compra.html:2
+msgid "Buy"
+msgstr "Comprar"
+
+#: app/compra/templates/realizar_compra.html:10
+msgid "Information for your purchase"
+msgstr "Información para tu compra"
+
+#: app/compra/templates/realizar_compra.html:31
+msgid "Your menu to buy"
+msgstr "Tu menú para comprar"
+
+#: app/compra/templates/realizar_compra.html:54
+msgid "Important!!"
+msgstr "¡Importante!"
+
+#: app/compra/templates/realizar_compra.html:60
+msgid "Payment Method"
+msgstr "Método de pago"
+
+#: app/compra/templates/realizar_compra.html:69
+msgid "Complete purchase"
+msgstr "Completar compra"
+
+#: app/error/routes.py:8
+msgid "Bad request"
+msgstr "Solicitud incorrecta"
+
+#: app/error/routes.py:13
+msgid "Page not found"
+msgstr "Página no encontrada"
+
+#: app/error/routes.py:18
+msgid "Method not allowed."
+msgstr "Método no permitido"
+
+#: app/error/routes.py:23
+msgid "Internal Server Error"
+msgstr "Error interno del servidor"
+
+#: app/error/templates/error.html:9
+msgid "Return to home page"
+msgstr "Volver a la página de inicio"
+
+#: app/error/templates/error.html:10 app/inicio/templates/inicio.html:2
+#: app/templates/base.html:43
+msgid "Home"
+msgstr "Inicio"
+
+#: app/inicio/routes.py:54
+msgid "Dishes to Share"
+msgstr "Platos para Compartir"
+
+#: app/inicio/templates/detalles.html:2
+msgid "Details"
+msgstr "Detalles"
+
+#: app/inicio/templates/detalles.html:11
+msgid "Choose the quantity"
+msgstr "Elige la cantidad"
+
+#: app/inicio/templates/detalles.html:31
+msgid "Unit value"
+msgstr "Valor unitario"
+
+#: app/inicio/templates/detalles.html:35
+msgid "Quantity to order"
+msgstr "Cantidad a pedir"
+
+#: app/inicio/templates/detalles.html:50
+msgid "Add to cart"
+msgstr "Agregar al carrito"
+
+#: app/inicio/templates/inicio.html:9
+msgid "Always fresh &amp; Delightfull"
+msgstr "Siempre fresco y delicioso"
+
+#: app/inicio/templates/inicio.html:23
+msgid "See our Menu"
+msgstr "Ver nuestro menú"
+
+#: app/inicio/templates/inicio.html:40 app/templates/base.html:55
+msgid "Main courses"
+msgstr "Platos principales"
+
+#: app/inicio/templates/inicio.html:61
+msgid "Our Menu"
+msgstr "Nuestro Menú"
+
+#: app/inicio/templates/inicio.html:62
+msgid "Choose an image for more details"
+msgstr "Elige una imagen para más detalles"
+
+#: app/inicio/templates/inicio.html:117
+msgid "REVIEWS"
+msgstr "RESEÑAS"
+
+#: app/templates/base.html:49
+msgid "Categories"
+msgstr "Categorías"
+
+#: app/templates/base.html:71
+msgid "English"
+msgstr "Inglés"
+
+#: app/templates/base.html:72
+msgid "Spanish"
+msgstr "Español"
+
+#: app/templates/email.html:9
+msgid "Thank you very much for your registration"
+msgstr "Muchas gracias por tu registro"
+

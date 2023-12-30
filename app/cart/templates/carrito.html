@@ -1,13 +1,13 @@
 {% extends "base.html"%}
-{% block title %}Blue Bull Bar - Carrito{% endblock %}
+{% block title %}Blue Bull Bar - {{_('Cart')}}{% endblock %}
 {% block content %}
 
 <!-- header -->
 <header id="home" class="header">
     <div class="overlay text-white text-center"><br><br>
         <h1 class="display-2 font-weight-bold pt-5 my-3">Blue Bull Bar</h1>
-        <h2 class="display-4 mb-5">Always fresh &amp; Delightful</h2>
-        <a class="btn btn-lg btn-primary" href="#menu">Gestiona tu carrito</a>
+        <h2 class="display-4 mb-5">{{_('Always fresh &amp; Delightful')}}</h2>
+        <a class="btn btn-lg btn-primary" href="#menu">{{_('Manage your cart')}}</a>
         <!-- Mostrar mendajes flash -->
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -37,7 +37,7 @@
 <div id="menu" class="container-fluid bg-dark py-2 text-light text-center wow fadeIn">
 
     <div class="tab-content" id="pills-tabContent">
-        <h2 class="mt-5 mb-5">Total a pagar: $ {{total}}</h2>
+        <h2 class="mt-5 mb-5">{{_('Total to pay')}}: $ {{total}}</h2>
 
         <div class="tab-pane fade show active" id="foods" role="tabpanel" aria-labelledby="pills-home-tab">
             <div class="row gallary">
@@ -58,15 +58,18 @@
                         <div class="card-body" style="height: 150px; overflow: hidden;">
                             <!-- <h1 class="text-center mb-4"><a href="#" class="badge badge-primary">{{ item_cart.precio
                                     }}</a></h1> -->
-                            <h5 class="">{{ item_cart.nombre }}<br> (Cat: {{ item_cart.categoria }})</h5>
-                            <h6 class="">Precio x Cantidad: $ <span id="precio_total_{{ item_cart.id }}">{{
+                            <h5 class="">{{ item_cart.nombre }}
+                                <br> 
+                                (Cat: {{ item_cart.categoria }})
+                            </h5>
+                            <h6 class="">{{_('Price x Quantity')}}: $ <span id="precio_total_{{ item_cart.id }}">{{
                                     item_cart.precio }}</span></h6>
                             <p class="text-white">{{ item_cart.descripcion }}</p>
                         </div>
                         <div class="pb-3">
                             <form action="{{ url_for('cart.editar_item', id=item_cart.id) }}" method="post"
                                 class="my-3">
-                                <label for="nueva_cantidad">Nueva Cantidad:</label>
+                                <label for="nueva_cantidad">{{_('New Quantity')}}:</label>
                                 <div class="d-flex justify-content-center">
                                     <input type="number" id="cantidad_{{ item_cart.id }}"
                                         name="cantidad_{{ item_cart.id }}" value="{{ item_cart.cantidad }}" min="1"
@@ -81,12 +84,11 @@
                                 <div class="row" style="margin: 1px auto;">
                                     <div class="col">
                                         <button type="submit" id="actualizar_{{ item_cart.id }}"
-                                            class="btn btn-primary">Actualizar Cantidad</button>
+                                            class="btn btn-primary">{{_('Update Quantity')}}</button>
                                     </div>
                                     <div class="col">
                                         <a class="btn btn-danger"
-                                            href="{{ url_for('cart.eliminar_item', id=item_cart.id) }}">Eliminar del
-                                            Carrito</a>
+                                            href="{{ url_for('cart.eliminar_item', id=item_cart.id) }}">{{_('Delete from cart')}}</a>
                                     </div>
                                 </div>
                             </form>
@@ -131,7 +133,7 @@
         {% if 'email' in session %}
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalLong" style="font-size: 15pt;">
-            Comprar
+            {{_('Proceed to Buy')}}
         </button>
         <!-- Modal -->
         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
@@ -139,7 +141,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content" style="color: black;">
                     <div class="modal-header bg-success">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Productos en tu carrito</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">{{_('Menu in your cart')}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -148,15 +150,15 @@
                         <!-- Itera sobre los elementos del carrito -->
                         {% for item_cart in carrito %}
                         <div>
-                            <p>Nombre: {{ item_cart.nombre }} - Cantidad: {{ item_cart.cantidad }} <br> Precio: ${{
+                            <p>{{_('Name')}}: {{ item_cart.nombre }} - {{_('Quantity')}}: {{ item_cart.cantidad }} <br> {{_('Price')}}: ${{
                                 item_cart.precio }}</p>
                             <hr>
                         </div>
                         {% endfor %}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <a href="{{ url_for('compra.realizar_compra') }}" class="btn btn-primary">Completar Compra</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{_('Close')}}</button>
+                        <a href="{{ url_for('compra.realizar_compra') }}" class="btn btn-primary">{{_('Complete Purchase')}}</a>
                     </div>
                 </div>
             </div>
@@ -165,7 +167,7 @@
         {% else %}
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" style="font-size: 15pt;">
-            Comprar
+            {{_('Proceed to Buy')}}
         </button>
         <!-- Modal -->
         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
@@ -173,20 +175,20 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content" style="color: black;">
                     <div class="modal-header bg-danger">
-                        <h5 class="modal-title" id="exampleModalLongTitle">No has iniciado sesión</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">{{_('You are not logged in')}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div>
-                            <h3>Para realizar tu compra Regístrate o Inicia sesión</h3>
+                            <h3>{{_('To make your purchase, you must Register and Log in')}}</h3>
                             <hr>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <a href="{{ url_for('auth.login_registro') }}" class="btn btn-primary">Ir a inicio de sesión</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{_('Close')}}</button>
+                        <a href="{{ url_for('auth.login_registro') }}" class="btn btn-primary">{{_('Go to login')}}</a>
                     </div>
                 </div>
             </div>

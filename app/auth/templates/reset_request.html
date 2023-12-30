@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Blue Bull Bar - Solicitud Reestablecer Contraseña{% endblock %}
+{% block title %}Blue Bull Bar - {{_('Password Reset Request')}}{% endblock %}
 {% block content %}
 
 <!-- header -->
@@ -17,7 +17,7 @@
             <div class="container pb-5 pt-5">
                 <div style="margin: 10px 10%; ">
 
-                    <h2 class="mb-4">Ingresa tu correo</h2>
+                    <h2 class="mb-4">{{_('Enter your e-mail')}}</h2>
                     <!-- Mostrar mendajes flash -->
                     {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
@@ -33,10 +33,10 @@
 
                     <form method="post" action="{{ url_for('auth.reset_request') }}" autocomplete="off">
                         <div class="form-group">
-                            <label for="email">Correo electrónico:</label>
+                            <label for="email">{{_('Email')}}:</label>
                             <input type="email" class="form-control" name="email" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Enviar Correo de Restablecimiento</button>
+                        <button type="submit" class="btn btn-primary">{{_('Send Restore Email')}}</button>
 
                     </form>
                 </div>

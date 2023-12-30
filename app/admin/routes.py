@@ -5,6 +5,7 @@ from app.services.menu_service import  PER_PAGE, agregar_item, eliminar_item, mo
 from app.services.usuario_service import obtener_por_email
 from flask_paginate import Pagination
 from app.models.menu import MenuItem
+from flask_babel import _
 
 @admin_bp.route('/panel_control')
 def panel_control():
@@ -20,7 +21,7 @@ def panel_control():
         items_menu=obtener_menu_paginate(offset)
         total_items =obtener_total_menu('all')
         pagination = Pagination(page=page, total=total_items, per_page=PER_PAGE, bs_version=4, 
-        display_msg="Mostrando {start} - {end} de {total} registros en total")
+        display_msg=_("Showing {start} - {end} of {total} total records"))
 
         return render_template('panel_control.html', usuario=usuario, items_menu=items_menu, total=total_items, pagination=pagination)
     else:
@@ -42,16 +43,16 @@ def agregar():
                 try:
                     if agregar_item(nuevo_item):
                         print('Se guardado con exito')
-                        flash("Guardado con exito","success")
+                        flash(_("Saved successfully"),"success")
                         return redirect(url_for('admin.panel_control'))
                     else:
                         print('Error al guardar')
-                        flash("Error al guardar el item", "danger")
+                        flash(_("Error saving item"), "danger")
                 except Exception as e:
                     print(f"Se produjo la excepcion: {e}")
-                    flash("Error desconocido", "warning")
+                    flash(_('Unknown error'), "warning")
             else:
-                flash("Datos incorrectos","warning")
+                flash(_("Incorrect data"),"warning")
                 # return render_template("agregar_producto.html",usuario=usuario, form=form)
 
         return render_template("agregar_producto.html",usuario=usuario, form=form)
@@ -79,14 +80,14 @@ def modificar(item_id):
             try:
                 if modificar_item(item_modificar):
                     print('Se guardado con exito')
-                    flash("Guardado con exito","success")
+                    flash(_("Saved successfully!!"),"success")
                     return redirect(url_for('admin.panel_control'))
                 else:
                     print('Error al guardar')
-                    flash("Error al guardar el item", "danger")
+                    flash(_("Error saving item"), "danger")
             except Exception as e:
                 print(f"Se produjo la excepcion: {e}")
-                flash("Error desconocido", "warning")
+                flash(_("Unknown error"), "warning")
 
 
         return redirect(url_for('admin.panel_control'))
@@ -105,9 +106,9 @@ def eliminar(item_id):
         if request.method == 'GET':
             print(item_id)
             if eliminar_item(item_id):
-                flash("Eliminación exitosa","success")
+                flash(_("Successful removal"),"success")
             else:  
-                flash("No se pudo eliminar el elemento","danger")
+                flash(_("Could not delete item"),"danger")
 
         return redirect(url_for('admin.panel_control'))
     else:

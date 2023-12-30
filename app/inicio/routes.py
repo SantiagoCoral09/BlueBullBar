@@ -6,6 +6,7 @@ from app.models.cart import Cart
 from app.services.menu_service import obtener_por_categoria, obtener_por_id, PER_PAGE, obtener_total_menu
 from app.services.cart import obtener_carrito
 from flask_paginate import Pagination
+from flask_babel import _
 
 @inicio_bp.route('/')
 def home():
@@ -19,7 +20,7 @@ def home():
     menu=obtener_por_categoria('Entrada',offset)
     total_items =obtener_total_menu('Entrada')
     pagination = Pagination(page=page, total=total_items, per_page=PER_PAGE, bs_version=4, 
-        display_msg="Mostrando {start} - {end} de {total} registros en total")
+        display_msg=_("Showing {start} - {end} of {total} total records"))
     
     usuario=None
     if 'email' in session:
@@ -27,30 +28,36 @@ def home():
         email_usuario=session['email']
         usuario=obtener_por_email(email_usuario)
 
-    return render_template('inicio.html',usuario=usuario, categoria='Platos de Entrada',menu=menu,total_items_cart=cart.total_items(), pagination=pagination)
+    return render_template('inicio.html',usuario=usuario, categoria=_('Entries'),num_cat=1,menu=menu,total_items_cart=cart.total_items(), pagination=pagination)
+
+
 
 @inicio_bp.route('/categoria/<categoria>')
 def platos_por_categoria(categoria):
     """Página Inicio"""
-
     page = request.args.get('page', 1, type=int)
     offset = (page - 1) * PER_PAGE
     
     menu=obtener_por_categoria(categoria,offset)
     total_items =obtener_total_menu(categoria)
     pagination = Pagination(page=page, total=total_items, per_page=PER_PAGE, bs_version=4, 
-        display_msg="Mostrando {start} - {end} de {total} registros en total")
+        display_msg=_("Showing {start} - {end} of {total} total records"))
     
     if categoria=='Entrada':
-        cat='Platos de Entrada'
+        num_cat=1
+        cat=_('Entries')
     elif categoria=='Principal':
-        cat='Platos Principales'
+        num_cat=2
+        cat=_('Main Courses')
     elif categoria=='Compartir':
-        cat='Platos para Compartir'
+        num_cat=3
+        cat=_('Dishes to Share')
     elif categoria=='Postre':
-        cat='Postres'
+        num_cat=4
+        cat=_('Desserts')
     elif categoria=='Bebida':
-        cat='Bebidas'
+        num_cat=5
+        cat=_('Drinks')
     else:
         abort(404)
     
@@ -60,7 +67,8 @@ def platos_por_categoria(categoria):
         email_usuario=session['email']
         usuario=obtener_por_email(email_usuario)
     cart=obtener_carrito()
-    return render_template('inicio.html',usuario=usuario,categoria=cat,menu=menu, total_items_cart=cart.total_items(), pagination=pagination)
+    return render_template('inicio.html',usuario=usuario,categoria=cat,num_cat=num_cat,menu=menu, total_items_cart=cart.total_items(), pagination=pagination)
+    
     
     
 @inicio_bp.route('/detalles/<id>')

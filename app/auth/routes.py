@@ -3,10 +3,10 @@ from app.auth.forms import LoginForm, RegistroForm
 from app.config.config import Config, MAIL_USERNAME, mail
 from app.models.usuario import Usuario
 from app.services.cart import obtener_carrito
-from app.services.auth_service import verificar_email, verificar_password
 from app.services.usuario_service import actualizarUsuario, agregar_usuario, obtener_por_email
 from . import auth_bp
 from flask_mail import Mail, Message
+from flask_babel import _
 
 
 
@@ -28,7 +28,7 @@ def login_registro():
         existe_usuario=obtener_por_email(correo_registro)
         if existe_usuario:
             print('Correo ya existe')
-            flash('El correo electrónico ya está registrado. Inicia sesión si ya tienes una cuenta.','warning')
+            flash(_('The email is already registered. Sign in if you already have an account.'),'warning')
             return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items_cart=cart.total_items())
         else:
                     # Si el correo no está registrado, procede con el registro
@@ -44,8 +44,8 @@ def login_registro():
                 print('Se registro')
                 session['email']=nuevo_usuario.email
                 session['tipo_usuario']='public'
-                flash("Te has registrado exitosamente!!!",'success')
-                msg = Message('Gracias por tu registro!',
+                flash(_("You have successfully registered!!!"),'success')
+                msg = Message(_('Thanks for your register!'),
                           sender=MAIL_USERNAME,
                           recipients=[nuevo_usuario.email])
                 # print(f"Mensaje... {msg}")
@@ -55,7 +55,7 @@ def login_registro():
                 return redirect(url_for('inicio.home'))
             else:
                 print('Problema de registro')
-                flash('Hubo un problema durante el registro. Por favor, inténtalo de nuevo.','danger')
+                flash(_('There was a problem during registration. Please try again.'),'danger')
                 return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items_cart=cart.total_items())
 
     elif form_login.submit_login.data and form_login.validate_on_submit():
@@ -68,7 +68,7 @@ def login_registro():
                 session['email']=existe_usuario.email
                 session['tipo_usuario']=existe_usuario.tipo_usuario
                 print('Inicio de sesion exitoso')
-                flash('Inicio de sesion exitoso','success')
+                flash(_('Successful login'),'success')
                 print(f"***Tipo de usuario***{existe_usuario.tipo_usuario}")
 
                 if existe_usuario.tipo_usuario=='admin':
@@ -78,12 +78,12 @@ def login_registro():
                     return redirect(url_for('inicio.home'))
             else:
                 print('Contraseña incorrecta')
-                flash('La contraseña es incorrecta. Intenta nuevamente.','warning')
+                flash(_('Password is incorrect. Try again.'),'warning')
             return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items_cart=cart.total_items())
         else:
             # Si el correo no está registrado
         
-            flash('El correo ingresado no está registrado. Si no tienes cuenta debes registrarte','warning')
+            flash(_('The email entered is not registered. If you do not have an account you must register'),'warning')
             return render_template("login.html", form_registro=form_registro, form_login=form_login, total_items_cart=cart.total_items())
 
     else:
@@ -104,13 +104,13 @@ def cerrar_sesion():
 
 def send_reset_email(user:Usuario):
     token = user.get_reset_token()
-    msg = Message('Solicitud de Restablecimiento de Contraseña',
+    msg = Message(_('Password Reset Request'),
                   sender=MAIL_USERNAME,
                   recipients=[user.email])
-    msg.body = f'''Para restablecer tu contraseña, visita el siguiente enlace:
+    msg.body = _(f'''To reset your password, visit the following link:
         {url_for('auth.reset_token', token=token, _external=True)}
-        Si no has solicitado esto, simplemente ignora este correo y ninguna acción será tomada.
-    '''
+        If you have not requested this, simply ignore this email and no action will be taken.
+    ''')
     mail.send(msg)
 
 @auth_bp.route('/reset_password', methods=['GET', 'POST'])
@@ -126,10 +126,10 @@ def reset_request():
         user = obtener_por_email(email=email)
         if user:
             send_reset_email(user)
-            flash('Se ha enviado un correo electrónico con instrucciones para restablecer la contraseña.','success')
+            flash(_('An email has been sent with instructions to reset your password.'),'success')
             return redirect(url_for('auth.login_registro'))
         else:
-            flash('No existe una cuenta con ese correo electrónico. Primero regístrate.', 'warning')
+            flash(_('There is no account with that email. Sign up first.'), 'warning')
     return render_template('reset_request.html',total_items_cart=cart.total_items())
 
 @auth_bp.route('/reset_password/<token>', methods=['GET', 'POST'])
@@ -142,15 +142,15 @@ def reset_token(token):
     cart = obtener_carrito()
     user = Usuario.verify_reset_token(token)
     if user is None:
-        flash('El token es inválido o ha expirado.', 'warning')
+        flash(_('The token is invalid or has expired.'), 'warning')
         return redirect(url_for('auth.reset_request'))
     if request.method == 'POST':
         password = request.form.get('password')
         user.password = password
         user.reset_token = None
         if actualizarUsuario(user):    
-            flash('Tu contraseña ha sido actualizada. Ahora puedes iniciar sesión.','success')
+            flash(_('Your password has been updated. Now you can log in.'),'success')
             return redirect(url_for('auth.login_registro'))
         else:
-            flash('Se produjo un error al reestablecer','danger')
+            flash(_('An error occurred while resetting'),'danger')
     return render_template('reset_token.html', token=token, total_items_cart=cart.total_items())

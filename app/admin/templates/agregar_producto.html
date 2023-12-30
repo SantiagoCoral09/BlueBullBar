@@ -1,13 +1,13 @@
 {% extends "base_admin.html"%}
-{% block title %}Administrador - Agregar Menu{% endblock %}
+{% block title %}Admin - {{_("Add Menu")}}{% endblock %}
 {% block content %}
 
 <div id="admin" class="container-fluid wow fadeIn">
     <br>
     <div class="container">
-        <h2 class="text-center">Registro de Productos en Inventario</h2><br>
+        <h2 class="text-center">{{_("Registration of Products in Inventory")}}</h2><br>
         <div class="text-right">
-            <a class="btn btn-primary" href="{{url_for('admin.panel_control')}}">Listar inventario</a>
+            <a class="btn btn-primary" href="{{url_for('admin.panel_control')}}">{{_("List inventory")}}</a>
         </div>
         <br>
         <div class="row">
@@ -79,8 +79,6 @@
     });
     function cargarImagen() {
         let url_img = document.getElementById('imagen').value;
-        console.log('Se mostrara la imagen');
-        console.log(url_img);
         document.getElementById('cargar_imagen').innerHTML = '<img src="' + url_img + '" alt="img..." style="max-width:250px; max-height:500px;">'
     }
 </script>

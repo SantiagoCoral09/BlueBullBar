@@ -5,6 +5,7 @@ from . import cart_bp
 from app.models.cart import ItemCart
 from app.services.menu_service import obtener_por_id
 from app.services.cart import obtener_carrito
+from flask_babel import _
 
 @cart_bp.route('/agregar_item/<id_item>', methods=['POST'])
 def agregar_item(id_item):
@@ -24,14 +25,14 @@ def agregar_item(id_item):
             # Página de inicio
             print(cart.obtener_items_carrito())
 
-            
-            flash(f"Se agregó {obtener_por_id(id_item).nombre} al carrito",'success')
+            mensaje=_("Added to cart")
+            flash(f"{mensaje} '{obtener_por_id(id_item).nombre}'",'success')
             return redirect(url_for('inicio.home'))
         else:
-            flash("Elija una cantidad correcta",'warning')
+            flash(_("Choose a correct quantity"),'warning')
             return redirect(url_for('inicio.detalles', id=id_item))
     else:
-        flash("Error interno",'danger')
+        flash(_("Internal error"),'danger')
         return redirect(url_for('inicio.home'))
 
 @cart_bp.route('/mostrar_carrito')
@@ -64,7 +65,8 @@ def editar_item(id):
             session['cart'] = cart.to_dict()
 
             # Mostrar un mensaje del producto actualizado
-            flash(f"Se actualizó la cantidad de {obtener_por_id(id).nombre}",'success')
+            mensaje=_("Updated quantity of")
+            flash(f"{mensaje} '{obtener_por_id(id).nombre}'",'success')
         return redirect(url_for('cart.mostrar_carrito'))
 
 @cart_bp.route('/eliminar_item/<id>')
@@ -80,5 +82,5 @@ def eliminar_item(id):
 
     
     # Mostrar un mensaje del producto actualizado
-    flash(f"Se eliminó del carrito {obtener_por_id(id).nombre}",'warning')
+    flash(_("Removed from cart: '{name}'").format(name=obtener_por_id(id).nombre), 'warning')
     return redirect(url_for('cart.mostrar_carrito'))

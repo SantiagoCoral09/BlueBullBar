@@ -7,6 +7,7 @@ from app.services.usuario_service import obtener_por_email
 from app.services.cart import obtener_carrito
 from datetime import datetime
 from . import compra_bp
+from flask_babel import _
 
 @compra_bp.route('/realizar_compra', methods=["GET", "POST"])
 def realizar_compra():
@@ -21,7 +22,7 @@ def realizar_compra():
         usuario=obtener_por_email(email_usuario)
         
         form_compra = DatosCompraForm(request.form)
-        if form_compra.submit_compra.data:
+        if form_compra:
             if form_compra.validate_on_submit():
             
                 print(f"El usuario en sesion: {email_usuario}::::{usuario}")
@@ -51,15 +52,15 @@ def realizar_compra():
                                 total = cart.calcular_total() #valor total a pagar
                         print(f"cantidad items ahhora es: {carrito.__len__()}")
                         if carrito.__len__()==0:
-                            flash('La compra se ha realizado con éxito!','success')
+                            flash(_('The purchase has been made successfully!'),'success')
                             return redirect(url_for("inicio.home"))
                         
                     else:
-                        flash(f"Error al guardar la compra",'warning')
+                        flash(_("Error saving purchase"),'warning')
                 except Exception as e:
-                    flash(f"Se produjo el error: {e}",'danger')
+                    flash(_(f"The error ocurred: {e}"), 'danger')
             else:
-                flash("Error de validación del formluario",'warning')
+                flash(_("Form validation error"),'warning')
 
         return render_template('realizar_compra.html', usuario=usuario, form=form_compra, carrito=carrito, total=total, total_items_cart=cart.total_items())
     else:

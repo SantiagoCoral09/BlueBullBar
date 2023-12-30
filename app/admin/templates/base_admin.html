@@ -32,7 +32,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link">BIENVENIDO
+                    <a class="nav-link">{{_("WELCOME")}}
                         <br>
                         <span>{{usuario.nombres}}</span>
                     </a>
@@ -77,9 +77,9 @@
 
                 <li class="nav-item">
                     {% if 'email' in session %}
-                    <a class="nav-link btn" data-toggle="modal" data-target="#modalCerrarSesion">Cerrar Sesión</a>
+                    <a class="nav-link btn" data-toggle="modal" data-target="#modalCerrarSesion">{{_("Logout")}}</a>
                     {% else %}
-                    <a class="nav-link" href="{{ url_for('auth.login_registro')}}">Login/Cuenta</a>
+                    <a class="nav-link" href="{{ url_for('auth.login_registro')}}">{{_("Login/Account")}}</a>
                     {% endif %}
                 </li>
 
@@ -97,8 +97,8 @@
     <header id="home" class="header">
         <div class="overlay text-white text-center"><br><br><br>
             <h1 class="display-2 font-weight-bold my-3">Blue Bull Bar</h1>
-            <h2 class="display-4 mb-5">Always fresh &amp; Delightful</h2>
-            <a class="btn btn-lg btn-primary" href="#admin">Administrar productos</a>
+            <h2 class="display-4 mb-5">{{_('Always fresh &amp; Delightful')}}</h2>
+            <a class="btn btn-lg btn-primary" href="#admin">{{_("Manage products")}}</a>
             <hr>
             <!-- Mostrar mendajes flash -->
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -124,15 +124,15 @@
     <div class="container-fluid bg-dark text-light has-height-md middle-items border-top text-center wow fadeIn">
         <div class="row">
             <div class="col-sm-4  mt-3">
-                <h3>EMAIL US</h3>
+                <h3>{{_("EMAIL")}}</h3>
                 <P class="text-muted">info@website.com</P>
             </div>
             <div class="col-sm-4">
-                <h3>CALL US</h3>
+                <h3>{{_("CALL US")}}</h3>
                 <P class="text-muted">(123) 456-7890</P>
             </div>
             <div class="col-sm-4">
-                <h3>FIND US</h3>
+                <h3>{{_("FIND US")}}</h3>
                 <P class="text-muted">12345 Fake ST NoWhere AB Country</P>
             </div>
         </div>
@@ -154,14 +154,14 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="color: black;">
                 <div class="modal-header bg-danger">
-                    <h5 class="modal-title" id="modalCerrarSesionTitle">¿Seguro quieres cerrar sesión?</h5>
+                    <h5 class="modal-title" id="modalCerrarSesionTitle">{{_("Are you sure you want to log out?")}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <a href="{{ url_for('auth.cerrar_sesion') }}" class="btn btn-primary">Confirmar</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{_("Cancel")}}</button>
+                    <a href="{{ url_for('auth.cerrar_sesion') }}" class="btn btn-primary">{{_("Confirm")}}</a>
                 </div>
             </div>
         </div>
