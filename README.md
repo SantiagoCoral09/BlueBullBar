@@ -4,3 +4,5 @@ pip install Flask-Paginate
 pip install Flask-Mail
 pip install PyJWT
 
+admin@gmail.com
+123456

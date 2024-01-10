@@ -35,7 +35,7 @@
 
 
                     <form method="post" action="{{ url_for('auth.login_registro') }}" novalidate autocomplete="off">
-                        {{ form_registro.csrf_token1 }}
+                        {{ form_registro.csrf_token }}
 
                         <div class="form-group">
                             <label for="nombre">{{_('Name')}} {{ form_registro.nombre(class="form-control",size=35) }}
