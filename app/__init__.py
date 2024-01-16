@@ -11,7 +11,7 @@ from flask_babel import Babel,_,gettext
 app = Flask(__name__)
 # app.config.from_object(DevelopmentMode)
 # Cuando se vaya a desplegar se pasa a ProductionMode
-app.config.from_object(DevelopmentMode)
+app.config.from_object(ProductionMode)
 
 babel = Babel(app)
 
